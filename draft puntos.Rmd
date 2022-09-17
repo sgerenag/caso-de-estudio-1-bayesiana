@@ -16,14 +16,14 @@ knitr::opts_chunk$set(echo = TRUE)
 
 
 ```{r gamma inversa previa posterior, echo=FALSE}
-
+#ikipdia dice que beta con esa pdf es escala, pero es fake(o r considera escala lo inverso)
  library(invgamma)
  set.seed(1234)
 
-lambda <- seq(0.005, 1, length = 1000)
-plot(NA, NA, xlim = c(0.1,0.2),ylim = c(0,4*(10^-34)),  xlab = expression(lambda), ylab = "densidad", main = "Posterior")
-lines(lambda, dinvgamma(lambda,33/4 , scale = 33625), col = 2, lwd = 2)
-lines(lambda, dinvgamma(lambda,33/4 + 14, scale = 33625 +70612 ), col = 4, lwd = 2)
+lambda <- seq(0.005, 10000, length = 10000)
+plot(NA, NA, xlim = c(1000,10000),ylim = c(0,0.0004091411),  xlab = expression(lambda), ylab = "densidad", main = "Posterior")
+lines(lambda, dinvgamma(lambda,33/4 , 33625), col = 2, lwd = 2)
+lines(lambda, dinvgamma(lambda,33/4 + 14,  33625 +70612 ), col = 4, lwd = 2)
 abline(h = 0, col = 1)
 legend("topright", legend = c( "Previa" , "posterior"), bty = "n", lwd = 2, col = c(2, 4))
 ```
