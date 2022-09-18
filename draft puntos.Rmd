@@ -41,7 +41,7 @@ alpha_post1 <- ((33/4)+n1)
 media_posterior1 <-((32625 + suma1)/((33/4)+n1)-1)
 IC_bayes1 <-qinvgamma(p = c(.025,.975),shape = alpha_post1,rate = beta_post1)
 var_post1 <- (beta_post1^2)/(((alpha_post1 -1)^2)*(alpha_post1 - 2))
-CV_bayes1 <- media_posterior1/sqrt(var_post1)
+CV_bayes1 <-  sqrt(var_post1)/media_posterior1
 
 
 
@@ -56,7 +56,7 @@ set.seed(1234)
 medias_boot <- apply(muestras_boot,MARGIN = 2, FUN = mean)
 media_pred_boot <- mean(medias_boot)
 var_boot <- var(medias_boot) 
-CV_boot <- media_pred_boot/sqrt(var_boot)
+CV_boot <-  sqrt(var_boot)/media_pred_boot
 IC_boot <- quantile(medias_boot, probs = c(.025,.975))
 
 ```
@@ -72,7 +72,7 @@ logpdf_yprevia <- quote(log(rate) - rate * x)
 info_fisher <- expected.varcov(density = pdf_yprevia, logdensity = logpdf_yprevia, n = n1, parms = c("rate"),
  mle = media_MLE, lower = 0)  #tomado del help del paquete
 
-CV_MLE <- info_fisher$mle /sqrt(as.numeric(info_fisher$varcov)) # no sé si está bien xd
+CV_MLE <-  sqrt(as.numeric(info_fisher$varcov))/info_fisher$mle # no sé si está bien xd
 
 
 ```
