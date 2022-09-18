@@ -28,4 +28,54 @@ abline(h = 0, col = 1)
 legend("topright", legend = c( "Previa" , "posterior"), bty = "n", lwd = 2, col = c(2, 4))
 ```
 
+##6
+
+```{r muestra inicial y estimaciones bayes}
+
+library(invgamma)
+datos1 <- c(495, 541, 1461, 1555, 1603, 2201, 2750, 3468, 3516, 4319, 6622, 7728, 13159, 21194)
+suma1 <- sum(datos1)
+n1 <- length(datos1)
+beta_post1 <-32625 + suma1 
+alpha_post1 <- ((33/4)+n1)
+media_posterior1 <-((32625 + suma1)/((33/4)+n1)-1)
+IC_bayes1 <-qinvgamma(p = c(.025,.975),shape = alpha_post1,rate = beta_post1)
+var_post1 <- (beta_post1^2)/(((alpha_post1 -1)^2)*(alpha_post1 - 2))
+CV_bayes1 <- media_posterior1/sqrt(var_post1)
+
+
+
+```
+
+```{r  estimaciones bootstrap}
+library(stats)
+
+set.seed(1234)
+
+ muestras_boot<- replicate(10000,sample(datos1, replace = T))
+medias_boot <- apply(muestras_boot,MARGIN = 2, FUN = mean)
+media_pred_boot <- mean(medias_boot)
+var_boot <- var(medias_boot) 
+CV_boot <- media_pred_boot/sqrt(var_boot)
+IC_boot <- quantile(medias_boot, probs = c(.025,.975))
+
+```
+
+```{r  estimaciones MLE}
+library(mle.tools)
+
+media_MLE <- mean(datos1)
+
+pdf_yprevia <- quote(rate * exp(-rate * x))
+logpdf_yprevia <- quote(log(rate) - rate * x)
+
+info_fisher <- expected.varcov(density = pdf_yprevia, logdensity = logpdf_yprevia, n = n1, parms = c("rate"),
+ mle = media_MLE, lower = 0)  #tomado del help del paquete
+
+CV_MLE <- info_fisher$mle /sqrt(as.numeric(info_fisher$varcov)) # no sé si está bien xd
+
+
+```
+
+
 
