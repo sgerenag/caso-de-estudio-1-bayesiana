@@ -77,5 +77,12 @@ CV_MLE <-  sqrt(as.numeric(info_fisher$varcov))/info_fisher$mle # no sÃ© si estÃ
 
 ```
 
+```{r probabilidades 4000 }
+library(invgamma)
 
+prob_lambda4000 <- pinvgamma(4000,alpha_post1,beta_post1)
+
+prob_ypred <- (beta_post1^(-alpha_post1)) - ((beta_post1 + 4000)^(-alpha_post1))
+
+```
 
