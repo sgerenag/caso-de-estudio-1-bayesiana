@@ -128,10 +128,10 @@ ppp2 <- sum((medias_pred2 > mean(datos2))/length(medias_pred2))
 
 ```{r grafico datos 1}
 par(mar = c(3,3,1.4,1.4), mgp = c(1.75,.75,0))
-hist(x = y1_rep, freq = F, col = "gray90", border = "gray90", xlab = "t", ylab = "p(t | y)", main = "")
+hist(x = y1_rep, freq = F, col = "gray90", border = "gray90", xlab = "t", ylab = "p(t | y)", main = "" , xlim = c(0,20000))
 lines(density(y1_rep), col = 4, lwd = 2)
 abline(v = mean(datos1), col = 1, lwd = 2, lty = 1)
-abline(v = quantile(x = mean(datos1), probs = c(0.025, 0.975)), lty = 2, lwd = 2, col = 2)
+abline(v = quantile(x = datos1, probs = c(0.025, 0.975)), lty = 2, lwd = 2, col = 2)
 legend("topright", legend = c("Posterior", "IC 95%", "media obs"), col = c(4, 2, 1), lty = 1, lwd = 2, bty = "n")
 
 ```
@@ -141,7 +141,7 @@ par(mar = c(3,3,1.4,1.4), mgp = c(1.75,.75,0))
 hist(x = y2_rep, freq = F, col = "gray90", border = "gray90", xlab = "t", ylab = "p(t | y)", main = "")
 lines(density(y2_rep), col = 4, lwd = 2)
 abline(v = mean(datos2), col = 1, lwd = 2, lty = 1)
-abline(v = quantile(x = mean(datos2), probs = c(0.025, 0.975)), lty = 2, lwd = 2, col = 2)
+abline(v = quantile(x = datos2, probs = c(0.025, 0.975)), lty = 2, lwd = 2, col = 2)
 legend("topright", legend = c("Posterior", "IC 95%", "media obs"), col = c(4, 2, 1), lty = 1, lwd = 2, bty = "n")
 
 ```
