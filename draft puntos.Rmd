@@ -82,7 +82,67 @@ library(invgamma)
 
 prob_lambda4000 <- pinvgamma(4000,alpha_post1,beta_post1)
 
-prob_ypred <- (beta_post1^(-alpha_post1)) - ((beta_post1 + 4000)^(-alpha_post1))
+prob_ypred <-  -((beta_post1)^(alpha_post1))*((beta_post1 + 4000)^(-alpha_post1)) + 1
+
+```
+
+
+```{r bondad de ajuste }
+set.seed(1234)
+library(invgamma)
+
+muestras_lambda1 <- rinvgamma(10000,alpha_post1,beta_post1)
+
+datos2 <- c(294, 569, 766, 1576, 1602, 2015, 2166, 3885, 8141, 10285)
+
+alpha_post2 <- (33/4) + length(datos2)
+beta_post2 <- 32625 + sum(datos2)
+
+muestras_lambda2 <- rinvgamma(10000, alpha_post2, beta_post2)
+
+medias_pred1 <- NULL
+
+for (i in 1:10000) {
+  
+  y1_rep  <- rexp(n = length(datos1), rate = 1/muestras_lambda1[i])
+ 
+  medias_pred1[i] <- mean(y1_rep)
+}
+
+medias_pred2 <- NULL
+
+for (i in 1:10000) {
+  
+  y2_rep  <- rexp(n = length(datos2), rate = 1/muestras_lambda2[i])
+ 
+  medias_pred2[i] <- mean(y1_rep)
+}
+
+ppp1 <- sum((medias_pred1 > mean(datos1))/length(medias_pred1))
+ppp2 <- sum((medias_pred2 > mean(datos2))/length(medias_pred2))
+ 
+
+
+
+```
+
+```{r grafico datos 1}
+par(mar = c(3,3,1.4,1.4), mgp = c(1.75,.75,0))
+hist(x = y1_rep, freq = F, col = "gray90", border = "gray90", xlab = "t", ylab = "p(t | y)", main = "" , xlim = c(0,20000))
+lines(density(y1_rep), col = 4, lwd = 2)
+abline(v = mean(datos1), col = 1, lwd = 2, lty = 1)
+abline(v = quantile(x = datos1, probs = c(0.025, 0.975)), lty = 2, lwd = 2, col = 2)
+legend("topright", legend = c("Posterior", "IC 95%", "media obs"), col = c(4, 2, 1), lty = 1, lwd = 2, bty = "n")
+
+```
+
+```{r grafico datos 2}
+par(mar = c(3,3,1.4,1.4), mgp = c(1.75,.75,0))
+hist(x = y2_rep, freq = F, col = "gray90", border = "gray90", xlab = "t", ylab = "p(t | y)", main = "")
+lines(density(y2_rep), col = 4, lwd = 2)
+abline(v = mean(datos2), col = 1, lwd = 2, lty = 1)
+abline(v = quantile(x = datos2, probs = c(0.025, 0.975)), lty = 2, lwd = 2, col = 2)
+legend("topright", legend = c("Posterior", "IC 95%", "media obs"), col = c(4, 2, 1), lty = 1, lwd = 2, bty = "n")
 
 ```
 
