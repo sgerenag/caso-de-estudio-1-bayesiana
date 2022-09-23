@@ -1,0 +1,184 @@
+---
+title: "draft puntos"
+author: "Sergio Andrés Niño Marín"
+date: "17/9/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+## 4
+
+
+
+```{r gamma inversa previa posterior, echo=FALSE}
+#ikipdia dice que beta con esa pdf es escala, pero es fake(o r considera escala lo inverso)
+ library(invgamma)
+ set.seed(1234)
+
+lambda <- seq(0.005, 10000, length = 10000)
+plot(NA, NA, xlim = c(1000,10000),ylim = c(0,0.0004091411),  xlab = expression(lambda), ylab = "densidad", main = "Posterior")
+lines(lambda, dinvgamma(lambda,33/4 , 33625), col = 2, lwd = 2)
+lines(lambda, dinvgamma(lambda,33/4 + 14,  33625 +70612 ), col = 4, lwd = 2)
+abline(h = 0, col = 1)
+legend("topright", legend = c( "Previa" , "posterior"), bty = "n", lwd = 2, col = c(2, 4))
+```
+
+##6
+
+```{r muestra inicial y estimaciones bayes}
+
+library(invgamma)
+datos1 <- c(495, 541, 1461, 1555, 1603, 2201, 2750, 3468, 3516, 4319, 6622, 7728, 13159, 21194)
+suma1 <- sum(datos1)
+n1 <- length(datos1)
+beta_post1 <-32625 + suma1 
+alpha_post1 <- ((33/4)+n1)
+media_posterior1 <-((32625 + suma1)/((33/4)+n1)-1)
+IC_bayes1 <-qinvgamma(p = c(.025,.975),shape = alpha_post1,rate = beta_post1)
+var_post1 <- (beta_post1^2)/(((alpha_post1 -1)^2)*(alpha_post1 - 2))
+CV_bayes1 <-  sqrt(var_post1)/media_posterior1
+
+
+
+```
+
+```{r  estimaciones bootstrap}
+library(stats)
+
+set.seed(1234)
+
+ muestras_boot<- replicate(10000,sample(datos1, replace = T))
+medias_boot <- apply(muestras_boot,MARGIN = 2, FUN = mean)
+media_pred_boot <- mean(medias_boot)
+var_boot <- var(medias_boot) 
+CV_boot <-  sqrt(var_boot)/media_pred_boot
+IC_boot <- quantile(medias_boot, probs = c(.025,.975))
+
+```
+
+```{r  estimaciones MLE}
+library(mle.tools)
+
+media_MLE <- mean(datos1)
+
+pdf_yprevia <- quote(rate * exp(-rate * x))
+logpdf_yprevia <- quote(log(rate) - rate * x)
+
+info_fisher <- expected.varcov(density = pdf_yprevia, logdensity = logpdf_yprevia, n = n1, parms = c("rate"),
+ mle = media_MLE, lower = 0)  #tomado del help del paquete
+
+CV_MLE <-  sqrt(as.numeric(info_fisher$varcov))/info_fisher$mle # no sé si está bien xd
+
+
+```
+
+###7
+
+```{r probabilidades 4000 }
+library(invgamma)
+
+prob_lambda4000 <- pinvgamma(4000,alpha_post1,beta_post1)
+
+prob_ypred <-  -((beta_post1)^(alpha_post1))*((beta_post1 + 4000)^(-alpha_post1)) + 1
+
+```
+
+###8
+
+```{r Factor bayes dif cero }
+library(invgamma)
+n1 <- length(datos1)
+s1 <- sum(datos1)
+alpha_prev <- 33/4
+beta_prev <- 32625
+
+bayes10_dif0 <- exp(alpha_prev*log(beta_prev) - log(gamma(alpha_prev))+log(gamma(alpha_prev + n1))-(alpha_prev + 1)*log(beta_prev + s1) 
+                          + n1*log(4000) + s1/4000 )
+
+```
+
+
+
+###9
+
+```{r Factor bayes distintos }
+library(invgamma)
+n2 <- length(datos2)
+s2 <- sum(datos2)
+
+
+bayes10_diflamb <- exp(alpha_prev*log(beta_prev) - log(gamma(alpha_prev))+log(gamma(alpha_prev + n2))+log(gamma(alpha_prev + n1))
+                       +(alpha_prev+ n1 + n2)*log(beta_prev+s1+s2) - log(gamma(alpha_prev+n1+n2)) -(alpha_prev+n2)*log(beta_prev +s2)
+                          -(alpha_prev + n1)*log(beta_prev + s1))
+
+```
+
+
+
+
+###10
+
+```{r bondad de ajuste }
+set.seed(1234)
+library(invgamma)
+
+muestras_lambda1 <- rinvgamma(10000,alpha_post1,beta_post1)
+
+datos2 <- c(294, 569, 766, 1576, 1602, 2015, 2166, 3885, 8141, 10285)
+
+alpha_post2 <- (33/4) + length(datos2)
+beta_post2 <- 32625 + sum(datos2)
+
+muestras_lambda2 <- rinvgamma(10000, alpha_post2, beta_post2)
+
+medias_pred1 <- NULL
+
+for (i in 1:10000) {
+  
+  y1_rep  <- rexp(n = length(datos1), rate = 1/muestras_lambda1[i])
+ 
+  medias_pred1[i] <- mean(y1_rep)
+}
+
+medias_pred2 <- NULL
+
+for (i in 1:10000) {
+  
+  y2_rep  <- rexp(n = length(datos2), rate = 1/muestras_lambda2[i])
+ 
+  medias_pred2[i] <- mean(y1_rep)
+}
+
+ppp1 <- sum((medias_pred1 > mean(datos1))/length(medias_pred1))
+ppp2 <- sum((medias_pred2 > mean(datos2))/length(medias_pred2))
+ 
+
+
+
+```
+
+```{r grafico datos 1}
+par(mar = c(3,3,1.4,1.4), mgp = c(1.75,.75,0))
+hist(x = y1_rep, freq = F, col = "gray90", border = "gray90", xlab = "t", ylab = "p(t | y)", main = "" , xlim = c(0,20000))
+lines(density(y1_rep), col = 4, lwd = 2)
+abline(v = mean(datos1), col = 1, lwd = 2, lty = 1)
+abline(v = quantile(x = datos1, probs = c(0.025, 0.975)), lty = 2, lwd = 2, col = 2)
+legend("topright", legend = c("Posterior", "IC 95%", "media obs"), col = c(4, 2, 1), lty = 1, lwd = 2, bty = "n")
+
+```
+
+```{r grafico datos 2}
+par(mar = c(3,3,1.4,1.4), mgp = c(1.75,.75,0))
+hist(x = y2_rep, freq = F, col = "gray90", border = "gray90", xlab = "t", ylab = "p(t | y)", main = "")
+lines(density(y2_rep), col = 4, lwd = 2)
+abline(v = mean(datos2), col = 1, lwd = 2, lty = 1)
+abline(v = quantile(x = datos2, probs = c(0.025, 0.975)), lty = 2, lwd = 2, col = 2)
+legend("topright", legend = c("Posterior", "IC 95%", "media obs"), col = c(4, 2, 1), lty = 1, lwd = 2, bty = "n")
+
+```
+
