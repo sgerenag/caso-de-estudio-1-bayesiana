@@ -100,17 +100,12 @@ You can also embed plots, for example:
 plot(pressure)
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot. Because printing is different from typewriting, there are a number of things that you have to do differently when preparing an input file than if you were just typing the document directly.  Quotation marks separates the double and single quote. 
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot. Because printing is different from typewriting, there are a number of things that you have to do differently when preparing an input file than if you were just typing the document directly. Quotation marks separates the double and single quote.
 
-$$a+b\geq c$$
-where $a$ is a variable and $c$ is variable as well.
+$$a+b\geq c$$ where $a$ is a variable and $c$ is variable as well.
 
 Dashes come in three sizes: a hyphen, an intra-word dash, a medium dash for number ranges like 1--2, and a punctuation dash in place of a comma, semicolon, colon or parentheses ---like this.
 
-The following are some other citations to check that the bibliographic style file is working correctly: \citet{akaike}, \citet*{akivarsq},
-\citet*{kstuart}, and \citet{companion}.  
+The following are some other citations to check that the bibliographic style file is working correctly: \citet{akaike}, \citet*{akivarsq}, \citet*{kstuart}, and \citet{companion}.
 
 # References {#references .unnumbered}
-
-
-
