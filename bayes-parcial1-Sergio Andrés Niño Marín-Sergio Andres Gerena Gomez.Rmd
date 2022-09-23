@@ -146,9 +146,69 @@ Para simplificar la notacion y tambien las matematicas en los siguientes pasos ,
 Siguiendo con la maximisacion de la funcion, primero se encuentran los puntos criticos empleando la primera derivada
 $$
 \begin{split}
-\frac{\delta}{\delta\theta}l(\theta|\vec{y})&=\frac{\delta}{\delta \theta}\left( \right)n*ln(\theta)
+\frac{\delta}{\delta\theta}l(\theta|\vec{y})&=\frac{\delta}{\delta \theta}\left( n*ln(\theta)-\theta s \right)\\
+&=\frac{n}{\theta}-s\\
+0&=\frac{n}{\hat{\theta}}-s\\
+\hat{\theta}&=\frac{n}{s}
 \end{split}
 $$
+para evaluar el punto critico encontrado se aplica el criterio de la segunda derivada, en el tenemos como criterio especial que si la funcion es siempre negativa en todo el soporte, el punto encontrado es un maximo global.
+$$
+\frac{\delta}{\delta \theta}(\frac{n}{\theta}-s)=-\frac{n}{\theta^2}
+$$
+Se tiene que la funcion obtenida es siempre negativa ya que $n>0$ al igual que $\theta^2 >0$, por lo que el punto critico encontrado no solo es un maximo local sino tambien, un maximo global, al ser asi se tiene entonces que $\hat{\theta}_{MLE}=\frac{n}{s}$.
+
+Ahora trabajamos con la invarianza funcional del estimador MLE para encontrar el estimador de maxima verosimillitud de $\lambda =\frac{1}{\theta}$, tenemos entonces que.
+$$
+\begin{split}
+\hat{g(\theta)}_{MLE}&=g(\hat{\theta}_{MLE})\\
+\hat{\lambda}_{MLE}&=\frac{1}{\hat{\theta}_{MLE}}=\frac{1}{\frac{n}{s}}\\
+\hat{\lambda}_{MLE}&=\frac{s}{n}
+\end{split}
+$$
+
+## Punto 6{-}
+Complete la siguiente tabla:
+	\begin{table}[h!]
+		\centering
+		\begin{tabular}{lccc}
+			\hline
+			Método & Estimación & CV (\%) & Intervalo al 95\% \\ 
+			\hline
+			Bayesiano         & \hspace{3.25cm} & \hspace{3.25cm} & \hspace{4.25cm} \\
+			Frec. Asintótico  & & & \\
+			Frec. Bootstrap   & & & \\
+			\hline
+		\end{tabular}\caption{Inferencia Bayesiana y Frecuentista sobre $\lambda$.}
+	\end{table}
+	Para completar la Tabla 1 tenga en cuenta que:
+	\begin{itemize}
+	    \item Bayesiano: Inferencia Bayesiana basada en la distribución posterior.
+	    \item Frec. Asintótico: Inferencia frecuentista basada en que $\hat\lambda_{\text{MLE}}\approx\textsf{N}(\lambda,\hat{I}^{-1})$ siempre que $n\rightarrow\infty$, donde $\hat\lambda_{\text{MLE}}$ es el MLE de $\lambda$ y $\hat{I}$ es la información observada de Fisher.
+	    \item Frec. Boostrap: Inferencia frecuentista basada en Boostrap no paramétrico.
+	\end{itemize}
+	
+### Solucion: {-}
+
+#### Enfoque Bayesiano{-} 
+
+
+Para completar la fila mediante el metodo bayesiano, se parte de la distribucion posterior encontrada anteriormente $GI(22.25,104237)$, Donde para crear una estimacion puntual del parametro se hace uso de la media de la distribucion posterior $\mu_p=\frac{\beta}{\alpha -1}$. Para el coeficiente de variacion se tiene que $CV\%=\frac{\sigma}{\mu}*100$ donde $\sigma$ es la desviacion estandar de la distribucion posterior y $\mu$ la media de la misma.
+
+Para el intervalo, que en el panorama estadistico se denomina region de confianza, se plantea un $(l,u)$ tal que $p(l<\lambda<u|\vec{y})=0.95$, asi para encontrar los limites del intervalo se emplean los cuantiles de la distribucion posterior tal que $l=\lambda_{0.025}$ y $u=\lambda_{0.975}$ de forma tal que se encierre la probabilidad pedida.
+
+Realizando estos calculos empleando R se llega a los siguientes resultados:
+\begin{itemize}
+  \item $\mu_p=4638.865$
+  \item $CV\%=23.27\%$
+  \item $IC_{95\%}=(3186,7382)$
+\end{itemize}
+
+#### Enfoque frecuentista asintotico {-} 
+
+
+Para la parte frecuentista asintotico, se parte de la base que 
+
 ## Github Markdown
 
 To get github friendly Markdown document for cleanly tracking changes to document in Github, put the following output first:
