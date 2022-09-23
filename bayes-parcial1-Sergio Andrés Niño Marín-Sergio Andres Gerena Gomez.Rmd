@@ -3,19 +3,19 @@ title: "Caso de estudio #1: Tiempo de falla"
 author: "Sergio Andres Niño Marin,  Sergio Andres Gerena Gomez"
 date: "26/sept/2022"
 output:
-  pdf_document:
-    
-    fig_caption: yes
-    number_sections: yes
-    toc: yes
+  md_document:
+    variant: markdown_github
   word_document:
     fig_caption: yes
   html_document:
     fig_caption: yes
     number_sections: yes
     toc: yes
-  md_document:
-    variant: markdown_github
+  pdf_document:
+    
+    fig_caption: yes
+    number_sections: yes
+    toc: yes
 ---
 
 ```{r setup, echo=FALSE, include=TRUE}
