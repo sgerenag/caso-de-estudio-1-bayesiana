@@ -79,6 +79,8 @@ CV_MLE <-  sqrt(as.numeric(info_fisher$varcov))/info_fisher$mle # no sÃ© si estÃ
 
 ```
 
+###7
+
 ```{r probabilidades 4000 }
 library(invgamma)
 
@@ -87,6 +89,37 @@ prob_lambda4000 <- pinvgamma(4000,alpha_post1,beta_post1)
 prob_ypred <-  -((beta_post1)^(alpha_post1))*((beta_post1 + 4000)^(-alpha_post1)) + 1
 
 ```
+
+###8
+
+```{r Factor bayes dif cero }
+library(invgamma)
+n1 <- length(datos1)
+s1 <- sum(datos1)
+alpha_prev <- 33/4
+beta_prev <- 32625
+
+bayes10_dif0 <- exp(alpha_prev*log(beta_prev) - log(gamma(alpha_prev))+log(gamma(alpha_prev + n1))-(alpha_prev + 1)*log(beta_prev + s1) 
+                          + n1*log(4000) + s1/4000 )
+
+```
+
+
+```{r Factor bayes distintos }
+library(invgamma)
+n2 <- length(datos2)
+s2 <- sum(datos2)
+
+
+bayes10_diflamb <- exp(alpha_prev*log(beta_prev) - log(gamma(alpha_prev))+log(gamma(alpha_prev + n2))+log(gamma(alpha_prev + n1))
+                       +(alpha_prev+ n1 + n2)*log(beta_prev+s1+s2) - log(gamma(alpha_prev+n1+n2)) -(alpha_prev+n2)*log(beta_prev +s2)
+                          -(alpha_prev + n1)*log(beta_prev + s1))
+
+```
+
+
+
+
 
 
 ```{r bondad de ajuste }
