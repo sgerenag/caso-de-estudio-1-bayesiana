@@ -207,7 +207,9 @@ Realizando estos calculos empleando R se llega a los siguientes resultados:
 #### Enfoque frecuentista asintotico {-} 
 
 
-Para la parte frecuentista asintotico, se parte de la base que 
+Para la parte frecuentista asintotico, se parte de la base que $\hat\lambda_{\text{MLE}}\approx\textsf{N}(\lambda,\hat{I}^{-1})$. Para la estimacion puntual esto no afecta ya que se emplea el estimador encontrado en el punto 5, que es igual a la media muestral.
+
+
 
 ## Github Markdown
 

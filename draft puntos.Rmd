@@ -16,7 +16,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 
 ```{r gamma inversa previa posterior, echo=FALSE}
-#ikipdia dice que beta con esa pdf es escala, pero es fake(o r considera escala lo inverso)
+
  library(invgamma)
  set.seed(1234)
 
@@ -64,15 +64,14 @@ IC_boot <- quantile(medias_boot, probs = c(.025,.975))
 ```{r  estimaciones MLE}
 library(mle.tools)
 
-media_MLE <- mean(datos1)
 
-pdf_yprevia <- quote(rate * exp(-rate * x))
-logpdf_yprevia <- quote(log(rate) - rate * x)
 
-info_fisher <- expected.varcov(density = pdf_yprevia, logdensity = logpdf_yprevia, n = n1, parms = c("rate"),
- mle = media_MLE, lower = 0)  #tomado del help del paquete
 
-CV_MLE <-  sqrt(as.numeric(info_fisher$varcov))/info_fisher$mle # no sé si está bien xd
+logpdf_y <- quote(-log(lambda) - x/lambda)
+
+obsevada<-observed.varcov(logdensity = logpdf_y, X = datos1, parms = c("lambda"), mle = media_MLE)  
+CV_MLE <-  sqrt(as.numeric(obsevada$varcov))/as.numeric(obsevada$mle)
+
 
 
 ```
