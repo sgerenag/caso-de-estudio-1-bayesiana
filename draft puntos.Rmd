@@ -89,14 +89,8 @@ prob_lambda4000 <- pinvgamma(4000,alpha_post1,beta_post1)
 
 ```{r Factor bayes dif cero }
 library(invgamma)
-n1 <- length(datos1)
-s1 <- sum(datos1)
-alpha_prev <- 33/4
-beta_prev <- 32625
 
-bayes10_dif0 <- exp(alpha_prev*log(beta_prev) - log(gamma(alpha_prev))+log(gamma(alpha_prev + n1))-(alpha_prev + 1)*log(beta_prev + s1) 
-                          + n1*log(4000) + s1/4000 )
-
+bayes10_dif0<-((32625/103237)**8.25)*((4000/103237)**14)*((gamma(22.25)*exp(17.653))/(gamma(8.25)))
 ```
 
 

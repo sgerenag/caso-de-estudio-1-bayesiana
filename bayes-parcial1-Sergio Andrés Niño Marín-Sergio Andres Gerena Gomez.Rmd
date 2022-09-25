@@ -303,6 +303,23 @@ Pruebe el sistema de hipótesis $H_0:\lambda=\lambda_0$ frente a $H_1:\lambda\ne
 	donde $\delta_a(x)$ es la función delta de Dirac. Reporte el factor de Bayes $B_{10}$ e interprete los resultados.
 
 ### Solucion: {-}
+El factor de bayes es una cantidad empleada para evaluar un sistema de hipotesis, en este caso, el sistema que se planea evaluar es $H_0:\lambda=4000$ y $H_1:\lambda\neq4000$, para esto se calcula el factor de bayes de la siguiente manera
+
+$$
+\begin{split}
+B_{10}=\frac{Pr(\vec{y}|H_1)}{Pr(\vec{y}|H_0)}&=\frac{\int_{0}^\infty \lambda^{-n}\exp{\left(-\tfrac{1}{\lambda}\textstyle\sum_{i=1}^n y_i\right)}\,\frac{\beta_0^{\alpha_0}}{\Gamma(\alpha_0)}\lambda^{-(\alpha_0+1)}\exp{\left(-\frac{\beta_0}{\lambda}\right)}\,\text{d}\lambda}{\int_{0}^\infty \lambda_0^{-n}\exp{\left(-\tfrac{1}{\lambda_0}\textstyle\sum_{i=1}^n y_i\right)}\,\delta_{\lambda_0}(\lambda)\,\text{d}\lambda}\\
+&=\frac{\frac{\beta_0^{\alpha_0}}{\Gamma(\alpha_0)}\int_{0}^\infty\lambda^{-(\alpha+n+1)}\exp{\left(-\tfrac{\beta_0+\textstyle\sum_{i=1}^ny_i}{\lambda}\right)\text{d}\lambda}}{\lambda_0^{-n}\exp{\left(-\tfrac{1}{\lambda_0}\textstyle\sum_{i=1}^n y_i\right)}\int_{0}^\infty\delta_{\lambda_0}(\lambda)\text{d}\lambda}\\
+&=\frac{\frac{\beta_0^{\alpha_0}}{\Gamma(\alpha_0)}\frac{\Gamma(\alpha_0+n)}{(\beta_0+s)^{\alpha_0+n}}}{\lambda_0^{-n}\exp{\left(-\tfrac{s}{\lambda_0}\right)}}
+\end{split}
+$$
+Remplazando por $\beta_0=32625$, $\alpha_0=8.25$, $s=70612$, $n=14$ y $\lambda_0=4000$ se tiene la siguiente ecuacion
+$$
+\begin{split}
+B_{10}&=\frac{\left(\frac{32625}{103237}\right)^{8.25}\frac{\Gamma(22.25)}{\Gamma(8.25)(103237)^{14}}}{4000^{-14}e^{-17.653}}\\
+&=\left(\frac{32625}{103237}\right)^{8.25}\left(\frac{4000}{103237}\right)^{14}\frac{\Gamma(22.25)e^{17.653}}{\Gamma(8.25)}\\
+&=0.782391
+\end{split}
+$$
 
 ## Punto 9{-}
 Experimentación adicional bajo las mismas condiciones con otro tipo de alambre (Tipo 2) produjo los siguientes resultados:
