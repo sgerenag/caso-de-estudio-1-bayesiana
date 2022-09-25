@@ -209,19 +209,119 @@ Realizando estos calculos empleando R se llega a los siguientes resultados:
 
 Para la parte frecuentista asintotico, se parte de la base que $\hat\lambda_{\text{MLE}}\approx\textsf{N}(\lambda,\hat{I}^{-1})$. Para la estimacion puntual esto no afecta ya que se emplea el estimador encontrado en el punto 5, que es igual a la media muestral.
 
+Para el CV se plantea primero, gracias a la libreria mle.tools, encontrar la informacion de fisher para el parametro lambda, una vez realizado esto, se tiene que $CV\%=\frac{\sqrt{\frac{1}{I_n}}}{\hat{\lambda}_{MLE}}*100$.
 
+Por ultimo, en el intervalo de confianza, ya que se tiene la distribucion asintotica, se plantea la variable pivote de forma tal que $Q(\vec{y},\lambda)=\sqrt{I_n}(\hat{\lambda}_{MLE}-\lambda)\approx N(0,1)$, de la ecuacion presentada se despeja $\lambda$ y se acotan los intervalos de la siguiente manera
+$$
+\begin{split}
+p\left( z_{0.025}< \sqrt{I_n}(\hat{\lambda}_{MLE}-\lambda)<z_{0.975} \right)&=0.95\\
+p\left( -\frac{z_{0.975}}{\sqrt{I_n}}+\hat{\lambda}_{MLE}<\lambda<-\frac{z_{0.025}}{\sqrt{I_n}}+\hat{\lambda}_{MLE} \right)&=0.95
+\end{split}
+$$
+Ya con este intervalo y el codigo en r, se calculan las fronteras del mismo, llegando al resultado.
 
-## Github Markdown
+A continuacion se muestra la lista de los datos pedidos
+\begin{itemize}
+  \item $\hat{\lambda}_{MLE}=5043.71$
+  \item $CV\%=26.73\%$
+  \item $IC_{95\%}=(2402,7686)$
+\end{itemize}
 
-To get github friendly Markdown document for cleanly tracking changes to document in Github, put the following output first:
+#### Enfoque frecuentista boostrap
 
-```
-output:
-  md_document:
-    variant: "markdown_github"
-```
+En este, se generan varios samples con remplazo del mismo tamaño de los datos, esto con el fin de generar un vector de tamaño 10000 con 10000 muestras cradas a partir de samples random de los datos.
 
-NOTE: You need to run this **LAST** though, since knitting other formats wipes out the `test_files` directory. To return to the Knit button having other options (HTML, PDF, Word), move this output type below the first option.
+Lo que se hace con este vector es sacarle la media a cada conjunto de datos creado, esto debido a que en el paradigmaa frecuentista, el estimador MLE para el parametro era la media muestral, de est manera se obtiene un vector de medias de tamaño 10000, uno por cada muestra generada mediante boostrap.
+
+Para los datos pedidos en la tabla, se hace inferencia respecto a ese vector de medias, la estimacion puntual del parametro seria la media del vector de medias, para el CV, se toma la varianza del vector de media asi como su media, con la varianza empirica del vector obtenemos la desviacion estandar empirica y siguiendo la formula $CV\%=\frac{\sigma_{empirica}}{\mu_{empirico}}*100$ se calcula el CV.
+
+Para el intervalo de confianza, se manejan los cuantiles del vector de medias, esto debido a que estamos usando este mismo como una distribucion del verdadero parametro, los cuantiles tomados tal que satisfagan los requerimientos de confianza pedidos son el $0.025$ y $0.975$.
+
+A continuacion se presenta los valores calculados por este metodo:
+\begin{itemize}
+  \item $puntual=5053.89$
+  \item $CV\%=29.5\%$
+  \item $IC_{95\%}=(2558.7,8283.9)$
+\end{itemize}
+La tabla completa se puede ver a continuacion
+	\begin{table}[h!]
+		\centering
+		\begin{tabular}{lccc}
+			\hline
+			Método & Estimación & CV (\%) & Intervalo al 95\% \\ 
+			\hline
+			Bayesiano         & 4638.865 \hspace{3.25cm} & 23.27\% \hspace{3.25cm} & (3186,7382) \hspace{4.25cm} \\
+			Frec. Asintótico  & 5043.71 & 26.73\%  & (2402,7686) \\
+			Frec. Bootstrap   & 5053.89  & 29.5\% & (2558.7,8283.9) \\
+			\hline
+		\end{tabular}\caption{Inferencia Bayesiana y Frecuentista sobre $\lambda$ Completa.}
+	\end{table}
+
+## Punto 7 {-}
+
+Calcule e interprete $\textsf{Pr}(\lambda < 4000\mid\boldsymbol{y})$ y $\textsf{Pr}(y^* < 4000\mid\boldsymbol{y})$, donde $y^*$ es un tiempo de falla futuro.
+
+### Solucion: {-}
+El primero resulta ser la probabilidad de que lambda sea menor a 4000 una vez se observaron los datos, se sabe que esto se cuantifica con la distribucion posterior. Para el calculo de esta cantidad se emplea la libreria invgamma, donde se encuentra pinvgamma para calcular la probabilidad acumulada hasta cierto valor, la funcion que se envia es la que ya se encontro para la distribucion posterior.
+
+La segunda probabilidad pedida es la de prediccion, esta quiere decir cual es la probabilidad de que un dato no observado (que no es parte de la muestra) sea menor a 4000, como se observa, ambas son cantidades distintas ya que hacen inferencia sobre cantidades distintas, la distribucion posterior hace inferencia sobre el parametro en cambio, la funcion predictiva posterior hace referencia a el valor que puede tomar una unidad no observada, es decir, la probabilidad de que el tiempo de falla de un nuevo alambre sea menor a 4000.
+
+Para calcular la probabilidad acumulada de la distribucion predictiva primero hay que encontrar la misma, para eso se usa la siguiente ecuacion:
+$$
+\begin{split}
+p(y^*|\vec{y})&=\int_{\Theta}p(y^*|\lambda)p(\lambda|\vec{y})d\lambda\\
+&=\int_{\Theta}\frac{1}{\lambda}e^{-\frac{y^*}{\lambda}}\frac{(\beta+s)^{\alpha+n}}{\Gamma(\alpha+n)}\lambda^{-(\alpha +n +1)}exp\left( \frac{-(\beta + s)}{\lambda} \right)d\lambda\\
+&=\frac{(\beta+s)^{\alpha+n}}{\Gamma(\alpha+n)}\int_{\Theta}\lambda^{-(\alpha+n+1+1)}e^{\left( \frac{-(\beta + s+y^*)}{\lambda} \right)}d\lambda\\
+&=\frac{(\beta+s)^{\alpha+n}}{\Gamma(\alpha+n)}\frac{\Gamma(\alpha+n+1)}{(\beta+s+y^*)^{(\alpha+n+1)}}\\
+&=\frac{(\beta+s)^{(\alpha+n)}(\alpha+n)\Gamma(\alpha+n)}{\Gamma(\alpha+n)(\beta+s+y^*)^{(\alpha+n)}(\beta+s+y^*)}\\
+p(y^*|\vec{y})&=\left(\frac{\beta+s}{\beta+s+y^*}\right)^{\alpha+n}\frac{\alpha+n}{\beta+s+y^*}
+\end{split}
+$$
+Ya con la funcion de densidad de la predictiva posterior, se calcula $\textsf{Pr}(y^* < 4000\mid\boldsymbol{y})$ aplicando la integral sobre esta desde 0 hasta 4000, ya que los valores que puede tomar la variable son los positivos dada la definicion de la misma, esta integral se observa a continuacion.
+$$
+\begin{split}
+\textsf{Pr}(y^* < 4000\mid\boldsymbol{y})&=\int_0^{4000}\left(\frac{\beta+s}{\beta+s+y^*}\right)^{\alpha+n}\frac{\alpha+n}{\beta+s+y^*}dy^*\\
+&=(\beta+s)^{\alpha+n}(\alpha+n)\int_0^{4000}\frac{1}{(\beta+s+y^*)^{\alpha+n+1}}dy^*\\
+&=103237^{22.25}22.25\int_0^{4000}\frac{1}{(103237+y^*)^{23.25}}dy^*\\
+&=103237^{22.25}22.25\int_{103237}^{107237}u^{-23.25}du\\
+&=103237^{22.25}22.25\left( \frac{-1}{22.25(107237)^{22.25}}+\frac{1}{22.25(103237)^{22.25}} \right)\\
+&=-\left(  \frac{103237}{107237} \right)^{22.25}+1\\
+\textsf{Pr}(y^* < 4000\mid\boldsymbol{y})&=0.5708
+\end{split}
+$$
+Empleando el codigo de r se obtuvo que $\textsf{Pr}(\lambda < 4000\mid\boldsymbol{y})=0.2155$, como se mencionaba anteriormente, ambas cantidades no son iguales por lo que son inferencia sobre cosas distintas como se explicaba anteriormente, estos resultados dan soporte de la afirmacion mencionada anteriormente.
+
+## Punto 8{-}
+Pruebe el sistema de hipótesis $H_0:\lambda=\lambda_0$ frente a $H_1:\lambda\neq\lambda_0$, con $\lambda_0=4000$. Para ello tenga en cuenta que 
+	$$
+	p(\boldsymbol{y}\mid H_0) = \int_{0}^\infty \lambda_0^{-n}\exp{\left(-\tfrac{1}{\lambda_0}\textstyle\sum_{i=1}^n y_i\right)}\,\delta_{\lambda_0}(\lambda)\,\text{d}\lambda
+	$$
+	y
+	$$
+	p(\boldsymbol{y}\mid H_1) = \int_{0}^\infty \lambda^{-n}\exp{\left(-\tfrac{1}{\lambda}\textstyle\sum_{i=1}^n y_i\right)}\,\frac{\beta_0^{\alpha_0}}{\Gamma(\alpha_0)}\lambda^{-(\alpha_0+1)}\exp{\left(-\frac{\beta_0}{\lambda}\right)}\,\text{d}\lambda
+	$$
+	donde $\delta_a(x)$ es la función delta de Dirac. Reporte el factor de Bayes $B_{10}$ e interprete los resultados.
+
+### Solucion: {-}
+
+## Punto 9{-}
+Experimentación adicional bajo las mismas condiciones con otro tipo de alambre (Tipo 2) produjo los siguientes resultados:
+	\[ 
+        294\ \ \ 569 \ \ \ 766 \ \ \ 1576 \ \ \ 1602 \ \ \ 2015 \ \ \ 2166 \ \ \ 3885 \ \ \ 8141 \ \ \ 10285
+    \]
+    Considerando modelos independientes de la forma
+    $y_{i,k} \mid \lambda_k \stackrel{ \mbox{\footnotesize iid} }{ \sim } \textsf{Exp} ( \lambda_k )$ con
+    $\lambda_k \sim \textsf{GI}(\alpha_0,\beta_0)$,
+    para $i = 1,\ldots,n_k$ y $k=1,2$, donde $y_{i,k}$ es el tiempo de falla del alambre $i$ de tipo $k$, y $n_k$ es el número de alambres de tipo $k$ sometidos a experimentación (la distribución previa es la misma para ambos tipos de alambre).  Pruebe el sistema de hipótesis $H_0:\lambda_1=\lambda_2$ frente a $H_1:\lambda_1\neq\lambda_2$.  Reporte el factor de Bayes $B_{10}$ e interprete los resultados.
+
+### Solucion:{-}
+
+## Punto 10{-}
+Verifique la idoneidad del modelo para ambos tipos de alambre empleando como estadística de prueba la media del tiempo de falla. Presente sus resultados gráficamente comparando la distribución predictiva posterior con el valor observado correspondiente. Así mismo, reporte el valor $p$ predictivo posterior en cada caso.
+
+### Solucion:{-}
+
+## Analisis{-}
 
 ## References {-}
 <!-- placeholder for References in toc --!>

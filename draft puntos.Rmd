@@ -47,7 +47,7 @@ CV_bayes1 <-  sqrt(var_post1)/media_posterior1
 
 ```
 
-```{r  estimaciones bootstrap}
+```{r  estimaciones boostrap}
 library(stats)
 
 set.seed(1234)
@@ -71,7 +71,7 @@ logpdf_y <- quote(-log(lambda) - x/lambda)
 
 obsevada<-observed.varcov(logdensity = logpdf_y, X = datos1, parms = c("lambda"), mle = media_MLE)  
 CV_MLE <-  sqrt(as.numeric(obsevada$varcov))/as.numeric(obsevada$mle)
-
+IC_mle<-c(-qnorm(0.975)*sqrt(as.numeric(obsevada$varcov))+media_MLE,-qnorm(0.025)*sqrt(as.numeric(obsevada$varcov))+media_MLE)
 
 
 ```
@@ -82,8 +82,6 @@ CV_MLE <-  sqrt(as.numeric(obsevada$varcov))/as.numeric(obsevada$mle)
 library(invgamma)
 
 prob_lambda4000 <- pinvgamma(4000,alpha_post1,beta_post1)
-
-prob_ypred <-  -((beta_post1)^(alpha_post1))*((beta_post1 + 4000)^(-alpha_post1)) + 1
 
 ```
 
