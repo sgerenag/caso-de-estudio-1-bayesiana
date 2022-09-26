@@ -1,7 +1,3 @@
-    ## Warning: package 'knitr' was built under R version 4.1.3
-
-    ## Warning: package 'RColorBrewer' was built under R version 4.1.3
-
 ## Caso de estudio
 
 Un investigador del Departamento de Ingeniería Electrónica y Eléctrica
@@ -22,19 +18,19 @@ tiempo de falla involucra la distribución Exponencial:
 Muestre que $s=\\sum\_{i=1}^n y_i$ es un estadístico suficiente para
 *λ*.
 
-### Solucion:
+### Solución:
 
-Aplicando el criterio de factorizacion de Fisher-Neyman tenemos que:
+Aplicando el criterio de factorización de Fisher-Neyman se observa que:
 $$
 \\begin{split}
-L(\\lambda\|y_1,...,y_n)&=\\prod\_{i=1}^{n}\\frac{1}{\\lambda}e^{-\\frac{y_i}{\\lambda}}I\_{(0,\\infty)}(y_i)\\\\
+\\mathcal{L}(\\lambda\|y_1,...,y_n)&=\\prod\_{i=1}^{n}\\frac{1}{\\lambda}e^{-\\frac{y_i}{\\lambda}}I\_{(0,\\infty)}(y_i)\\\\
 &=\\underbrace{\\frac{1}{\\lambda^n}e^{-\\frac{\\sum\_{i=1}^ny_i}{\\lambda}}}\_{g(T(y),\\lambda)}\\overbrace{\\prod\_{i=1}^{n}I\_{(0,\\infty)}(y_i)}^{h(y)} \\\\
 \\end{split}
 $$
-Con esto, vemos que un estadistico suficiente es $s=\\sum\_{i=1}^ny_i$
-dado que este estadistico cumple al poder factorizar de la expresion de
-verosimilitud en una funcion g que solo depende del estadistico
-suficiente y el parametro.
+Con esto, vemos que un estadístico suficiente es $s=\\sum\_{i=1}^ny_i$
+dado que este estadístico cumple al poderse factorizar de la expresión
+de verosimilitud en una función g que solo depende del estadístico
+suficiente y el parámetro.
 
 ## Pregunta 2
 
@@ -48,16 +44,15 @@ $$
 Muestre que si *X* ∼ Gamma(*α*,*β*), entonces
 $\\frac{1}{X}\\sim \\textsf{GI} ( \\alpha, \\beta )$.
 
-### Solucion:
+### solución:
 
-Siendo *X* una V.a absolutamente continua, empleamos el teorema de la
-transformacion para determinar la distribucion de
-$Y=\\frac{1}{X} \\ con \\ X>0$ a partir de la distribucion conocida *X*
-asi
+Siendo *X* una V.a absolutamente continua, se usa el teorema de la
+transformación para determinar la distribución de
+$Y=\\frac{1}{X} \\ con \\ X>0$ a partir de la distribución conocida *X*
 $$
 P\\left( \\frac{1}{X}\\right) =f_X\\left( \\frac{1}{Y}\\right) \\left\| \\frac{\\delta X}{\\delta Y} \\right\|= \\frac{\\beta^{\\alpha}}{\\Gamma(\\alpha)}\\left(\\frac{1}{Y} \\right)^{\\alpha -1}exp\\left( -\\frac{\\beta}{Y} \\right) \\left\| -\\frac{1}{Y^2} \\right\|
 $$
-Resolvemos esa expresion como se indica a continuacion
+Resolviendo como se indica a continuación
 $$
 \\begin{split}
 P\\left( \\frac{1}{X}\\right) &=\\frac{\\beta^{\\alpha}}{\\Gamma(\\alpha)}\\left(\\frac{1}{Y} \\right)^{\\alpha -1}exp\\left( -\\frac{\\beta}{Y} \\right) \\left( \\frac{1}{Y^2} \\right)\\\\
@@ -65,9 +60,9 @@ P\\left( \\frac{1}{X}\\right) &=\\frac{\\beta^{\\alpha}}{\\Gamma(\\alpha)}\\left
 P\\left( \\frac{1}{X}\\right)=P\\left( Y \\right)&=\\frac{\\beta^{\\alpha}}{\\Gamma(\\alpha)}Y^{-(\\alpha +1)}exp\\left( -\\frac{\\beta}{Y} \\right) \\sim GI(\\alpha,\\beta)
 \\end{split}
 $$
-Dado que lo optenido al aplicar el teorema de transformacion fue la
-distribucion descrita como Gamma inversa (*G**I*) con los respectivos
-parametros, podemos asegurar que la afirmacion propuesta en el punto
+Dado que lo obtenido al aplicar el teorema de transformación fue la
+distribución descrita como Gamma inversa (*G**I*) con los respectivos
+parámetros, podemos asegurar que la afirmación propuesta en el punto
 resulta verdadera.
 
 ## Punto 3
@@ -75,11 +70,11 @@ resulta verdadera.
 Considere la distribución previa *λ* ∼ GI(*α*,*β*) junto con la
 distribución muestral . Halle la distribución posterior de *λ*.
 
-### Solucion:
+### solución:
 
-Para esto aplicamos el teorema de bayes para encontrar la distribucion
-posterior de *λ* a partir de la distribucion muestral y la distribucion
-previa, de la siguiente manera
+Para esto se emplea el teorema de bayes para encontrar la distribución
+posterior de *λ* a partir de la distribución muestral y la distribución
+previa.
 
 $$
 \\begin{split}
@@ -90,10 +85,6 @@ p(\\lambda\|\\vec{y})&\\propto \\lambda^{-(\\alpha +n +1)}exp\\left( \\frac{-(\\
 \\end{split}
 $$
 
-Asi obtenemos la distribucion posterior (que resulto ser un modelo
-conjugado ya que la previa y posterior terminaron teniendo la misma
-distribucion pero con parametros distintos).
-
 ## Punto 4
 
 Se tiene información externa de otro experimento de acuerdo con el cual
@@ -102,11 +93,12 @@ la distribución previa de *λ* debería tener una media
 Haga un gráfico de las distribuciones previa y posterior en el mismo
 gráfico.
 
-### Solucion:
+### solución:
 
-Lo primero es, encontrar *α* y *β* de la distribucion previa tal que
-satisfaga la media *μ*<sub>0</sub> = 4500 y la desviacion estandar
-*σ*<sub>0</sub> = 1800, dando el siguiente sistema de ecuaciones:
+Lo primero es, encontrar los hiperparametros de la distribución previa
+tal que satisfaga la media *μ*<sub>0</sub> = 4500 y la desviación
+estándar *σ*<sub>0</sub> = 1800, dando el siguiente sistema de
+ecuaciones:
 $$
 \\begin{split}
 4500&=\\frac{\\beta_0}{\\alpha_0-1}\\ \\ \\ \\ \\ \\ \\ para \\ \\alpha_0 >1\\\\
@@ -116,80 +108,372 @@ $$
 
 Resolviendo el sistema de ecuaciones, tenemos que *α*<sub>0</sub> = 8.25
 y *β*<sub>0</sub> = 32625. con esto ya se puede construir la
-distribucion previa.
+distribución previa.
 
-Ahora, en base al punto anterior donde encontramos la distribucion
-posterior para este modelo presentado sigue la forma
-*G**I*(*α*+*n*,*β*+*s*) donde *n* es el tamaño de la muestra y *s* es la
-suma de todos los *y*<sub>*i*</sub>. Para esto tenemos el siguiente
-codigo
+Ahora, en base al punto anterior donde se calculó la distribución
+posterior para este modelo sigue la forma *G**I*(*α*+*n*,*β*+*s*) donde
+*n* es el tamaño de la muestra y *s* es la suma de todos los
+*y*<sub>*i*</sub>. Empleando una suma sobre los 14 términos que se tiene
+en los datos, resulta que *n* = 14 y *s* = 70612.
 
-``` r
-data<-c(495,541,1461,1555,1603,2201,2750,3468,3516,4319,6622,7728,13159,21194)
-s<-sum(data)
-s
-```
+Ahora sigue construir y graficar ambas distribuciones, tanto la previa
+como la posterior, usando código en R para realizar dicha acción, el
+resultado es el observado a continuación
 
-    ## [1] 70612
-
-``` r
-n<-length(data)
-n
-```
-
-    ## [1] 14
-
-Ahora sigue construir y plotear ambas distribuciones, tanto la previa
-como la posterior, con el codigo a continuacion la construimos y
-ploteamos
-
-``` r
-library(invgamma)
- set.seed(1234)
-
-lambda <- seq(0.005, 10000, length = 10000)
-plot(NA, NA, xlim = c(1000,10000),ylim = c(0,0.0004091411),
-
-xlab = expression(lambda), ylab = "densidad", main = "Posterior")
-lines(lambda, dinvgamma(lambda,8.25 , 33625), col = 2, lwd = 2)
-lines(lambda, dinvgamma(lambda,8.25 + n,  33625 +s ), col = 4, lwd = 2)
-abline(h = 0, col = 1)
-legend("topright", legend = c( "Previa" , "posterior"), bty = "n", lwd = 2, col = c(2, 4))
-```
-
-![](bayes-parcial1-Sergio-Andrés-Niño-Marín-Sergio-Andres-Gerena-Gomez_files/figure-markdown_github/unnamed-chunk-3-1.png)
+![](bayes-parcial1-Sergio-Andrés-Niño-Marín-Sergio-Andres-Gerena-Gomez_files/figure-markdown_github/unnamed-chunk-1-1.png)
 
 ## Punto 5
 
 Halle el estimador de máxima verosimilitud (MLE, por sus siglas en
 inglés) de *λ*.
 
-### Solucion:
+### solución:
 
-Para encontrar el estimador de maxima verosimilitud, lo primero es
-calcular la funcion de verosimilitud del parametro dada la muestra y a
-dicha funcion le encontramos el maximo global, pero antes, usaremos la
-parametrizacion de la exponencial donde $\\theta=\\frac{1}{\\lambda}$,
-luego de encontrar el MLE para dicho parametro, aplicamos la invarianza
+Para encontrar el estimador de máxima verosimilitud, lo primero es
+calcular la función de verosimilitud del parámetro dada la muestra y a
+dicha función se le encuentra el máximo global, pero antes, se usa la
+parametrización de la exponencial donde $\\theta=\\frac{1}{\\lambda}$,
+luego de encontrar el MLE para dicho parámetro, se emplea la invarianza
 funcional del estimador MLE para encontrar el estimador MLE de *λ*.
 
-Como lo dijimos anteriormente, empezamos encontrando el MLE de el
-parametro *θ* de la siguiente manera $$
+Se empieza encontrando la función de verosimilitud del parámetro *θ* de
+la siguiente manera
+$$
+\\begin{split}
+\\mathcal{L}(\\theta\|\\vec{y})&=\\prod\_{i=1}^np(y_i\|\\theta)\\\\
+&=\\prod\_{i=1}^n\\theta e^{-\\theta y_i}\\\\
+&=\\theta^ne^{-\\theta\\sum\_{i=1}^ny_i}
+\\end{split}
+$$
+Para simplificar la notación y también las matemáticas en los siguientes
+pasos, se usa como convención que $s=\\sum\_{i=1}^n$ además de que en el
+proceso de maximización se emplea la función log-verosimilitud
+𝓁(*θ*\|*y⃗*) la cual es el logaritmo natural de la anteriormente
+encontrada.
 
-$$ ## Github Markdown
+Siguiendo con la maximización de la función, primero se encuentran los
+puntos críticos empleando la primera derivada
+$$
+\\begin{split}
+\\frac{\\delta}{\\delta\\theta}l(\\theta\|\\vec{y})&=\\frac{\\delta}{\\delta \\theta}\\left( n\*ln(\\theta)-\\theta s \\right)\\\\
+&=\\frac{n}{\\theta}-s\\\\
+0&=\\frac{n}{\\hat{\\theta}}-s\\\\
+\\hat{\\theta}&=\\frac{n}{s}
+\\end{split}
+$$
+para evaluar el punto crítico encontrado se aplica el criterio de la
+segunda derivada, en el tenemos como criterio especial que si la función
+es siempre negativa en todo el soporte, el punto encontrado es un máximo
+global.
+$$
+\\frac{\\delta}{\\delta \\theta}(\\frac{n}{\\theta}-s)=-\\frac{n}{\\theta^2}
+$$
+Se tiene que la función obtenida es siempre negativa ya que *n* \> 0 al
+igual que *θ*<sup>2</sup> \> 0, por lo que el punto crítico encontrado
+no solo es un máximo local sino también, un máximo global, al ser así se
+tiene entonces que $\\hat{\\theta}\_{MLE}=\\frac{n}{s}$.
 
-To get github friendly Markdown document for cleanly tracking changes to
-document in Github, put the following output first:
+Ahora trabajamos con la invarianza funcional del estimador MLE para
+encontrar el estimador de máxima verosimilitud de
+$\\lambda =\\frac{1}{\\theta}$, tenemos entonces que.
+$$
+\\begin{split}
+\\hat{g(\\theta)}\_{MLE}&=g(\\hat{\\theta}\_{MLE})\\\\
+\\hat{\\lambda}\_{MLE}&=\\frac{1}{\\hat{\\theta}\_{MLE}}=\\frac{1}{\\frac{n}{s}}\\\\
+\\hat{\\lambda}\_{MLE}&=\\frac{s}{n}
+\\end{split}
+$$
 
-    output:
-      md_document:
-        variant: "markdown_github"
+## Punto 6
 
-NOTE: You need to run this **LAST** though, since knitting other formats
-wipes out the `test_files` directory. To return to the Knit button
-having other options (HTML, PDF, Word), move this output type below the
-first option.
+Complete la siguiente tabla:
+Para completar la Tabla 1 tenga en cuenta que:
+### solución:
+
+#### Enfoque Bayesiano
+
+Para completar la fila mediante el método bayesiano, se parte de la
+distribución posterior encontrada anteriormente *G**I*(22.25,104237),
+Donde para crear una estimación puntual del parámetro se hace uso de la
+media de la distribución posterior $\\mu_p=\\frac{\\beta}{\\alpha -1}$.
+Para el coeficiente de variación se tiene que
+$CV\\%=\\frac{\\sigma}{\\mu}\*100$ donde *σ* es la desviación estándar
+de la distribución posterior y *μ* la media de la misma.
+
+Para el intervalo, que en el panorama estadístico se denomina región de
+confianza, se plantea un (*l*,*u*) tal que
+*p*(*l*\<*λ*\<*u*\|*y⃗*) = 0.95, así para encontrar los límites del
+intervalo se emplean los cuantiles de la distribución posterior tal que
+*l* = *λ*<sub>0.025</sub> y *u* = *λ*<sub>0.975</sub> de forma tal que
+se encierre la probabilidad pedida.
+
+Realizando estos cálculos empleando R se llega a los siguientes
+resultados:
+#### Enfoque frecuentista asintótico
+
+Para la parte frecuentista asintótico, se parte de la base que
+*λ̂*<sub>MLE</sub> ≈ N(*λ*,*Î*<sup>−1</sup>). Para la estimación puntual
+esto no afecta ya que se emplea el estimador encontrado en el punto 5,
+que es igual a la media muestral.
+
+Para el CV se plantea primero, gracias a la librería mle.tools,
+encontrar la información de Fisher para el parámetro lambda, una vez
+realizado esto, se tiene que
+$CV\\%=\\frac{\\sqrt{\\frac{1}{I_n}}}{\\hat{\\lambda}\_{MLE}}\*100$.
+
+Por último, en el intervalo de confianza, ya que se tiene la
+distribución asintótica, se plantea la variable pivote de forma tal que
+$Q(\\vec{y},\\lambda)=\\sqrt{I_n}(\\hat{\\lambda}\_{MLE}-\\lambda)\\approx N(0,1)$,
+de la ecuación presentada se despeja *λ* y se acotan los intervalos de
+la siguiente manera
+$$
+\\begin{split}
+p\\left( z\_{0.025}\< \\sqrt{I_n}(\\hat{\\lambda}\_{MLE}-\\lambda)\<z\_{0.975} \\right)&=0.95\\\\
+p\\left( -\\frac{z\_{0.975}}{\\sqrt{I_n}}+\\hat{\\lambda}\_{MLE}\<\\lambda\<-\\frac{z\_{0.025}}{\\sqrt{I_n}}+\\hat{\\lambda}\_{MLE} \\right)&=0.95
+\\end{split}
+$$
+Ya con este intervalo y el código en r, se calculan las fronteras de
+este, llegando al resultado.
+
+A continuación, se muestra la lista de los datos pedidos
+#### Enfoque frecuentista boostrap
+
+En este, se generan varios samples con remplazo del mismo tamaño de los
+datos, esto con el fin de generar un vector de tamaño 10000 con 10000
+muestras creadas a partir de samples random de los datos.
+
+Lo que se hace con este vector es sacarle la media a cada conjunto de
+datos creado, esto debido a que en el paradigma frecuentista, el
+estimador MLE para el parámetro era la media muestral, de esta manera se
+obtiene un vector de medias de tamaño 10000, uno por cada muestra
+generada mediante boostrap.
+
+Para los datos pedidos en la tabla, se hace inferencia respecto a ese
+vector de medias, la estimación puntual del parámetro seria la media del
+vector de medias, para el CV, se toma la varianza del vector de media
+así como su media, con la varianza empírica del vector obtenemos la
+desviación estándar empírica y siguiendo la formula
+$CV\\%=\\frac{\\sigma\_{empirica}}{\\mu\_{empirico}}\*100$ se calcula el
+CV.
+
+Para el intervalo de confianza, se manejan los cuantiles del vector de
+medias, esto debido a que estamos usando este mismo como una
+distribución del verdadero parámetro, los cuantiles tomados tal que
+satisfagan los requerimientos de confianza pedidos son el 0.025 y 0.975.
+
+A continuación, se presenta los valores calculados por este método:
+La tabla completa se puede ver a continuación
+## Punto 7
+
+Calcule e interprete Pr(*λ*\<4000∣**y**) y
+Pr(*y*<sup>\*</sup>\<4000∣**y**), donde *y*<sup>\*</sup> es un tiempo de
+falla futuro.
+
+### solución:
+
+El primero resulta ser la probabilidad de que lambda sea menor a 4000
+una vez se observaron los datos, se sabe que esto se cuantifica con la
+distribución posterior. Para el cálculo de esta cantidad se emplea la
+librería invgamma, donde se encuentra pinvgamma para calcular la
+probabilidad acumulada hasta cierto valor, la función que se envía es la
+que ya se encontró para la distribución posterior.
+
+La segunda probabilidad pedida es la de predicción, esta quiere decir
+cuál es la probabilidad de que un dato no observado (que no es parte de
+la muestra) sea menor a 4000, como se observa, ambas son cantidades
+distintas ya que hacen inferencia sobre cantidades distintas, la
+distribución posterior hace inferencia sobre el parámetro en cambio, la
+función predictiva posterior hace referencia a el valor que puede tomar
+una unidad no observada, es decir, la probabilidad de que el tiempo de
+falla de un nuevo alambre sea menor a 4000.
+
+Para calcular la probabilidad acumulada de la distribución predictiva
+primero hay que encontrar la misma, para eso se usa la siguiente
+ecuación:
+$$
+\\begin{split}
+p(y^\*\|\\vec{y})&=\\int\_{\\Theta}p(y^\*\|\\lambda)p(\\lambda\|\\vec{y})d\\lambda\\\\
+&=\\int\_{\\Theta}\\frac{1}{\\lambda}e^{-\\frac{y^\*}{\\lambda}}\\frac{(\\beta+s)^{\\alpha+n}}{\\Gamma(\\alpha+n)}\\lambda^{-(\\alpha +n +1)}exp\\left( \\frac{-(\\beta + s)}{\\lambda} \\right)d\\lambda\\\\
+&=\\frac{(\\beta+s)^{\\alpha+n}}{\\Gamma(\\alpha+n)}\\int\_{\\Theta}\\lambda^{-(\\alpha+n+1+1)}e^{\\left( \\frac{-(\\beta + s+y^\*)}{\\lambda} \\right)}d\\lambda\\\\
+&=\\frac{(\\beta+s)^{\\alpha+n}}{\\Gamma(\\alpha+n)}\\frac{\\Gamma(\\alpha+n+1)}{(\\beta+s+y^\*)^{(\\alpha+n+1)}}\\\\
+&=\\frac{(\\beta+s)^{(\\alpha+n)}(\\alpha+n)\\Gamma(\\alpha+n)}{\\Gamma(\\alpha+n)(\\beta+s+y^\*)^{(\\alpha+n)}(\\beta+s+y^\*)}\\\\
+p(y^\*\|\\vec{y})&=\\left(\\frac{\\beta+s}{\\beta+s+y^\*}\\right)^{\\alpha+n}\\frac{\\alpha+n}{\\beta+s+y^\*}
+\\end{split}
+$$
+Ya con la función de densidad de la predictiva posterior, se calcula
+Pr(*y*<sup>\*</sup>\<4000∣**y**) aplicando la integral sobre esta desde
+0 hasta 4000, ya que los valores que puede tomar la variable son los
+positivos dada la definición de la misma, esta integral se observa a
+continuación.
+$$
+\\begin{split}
+\\textsf{Pr}(y^\* \< 4000\\mid\\boldsymbol{y})&=\\int_0^{4000}\\left(\\frac{\\beta+s}{\\beta+s+y^\*}\\right)^{\\alpha+n}\\frac{\\alpha+n}{\\beta+s+y^\*}dy^\*\\\\
+&=(\\beta+s)^{\\alpha+n}(\\alpha+n)\\int_0^{4000}\\frac{1}{(\\beta+s+y^\*)^{\\alpha+n+1}}dy^\*\\\\
+&=103237^{22.25}22.25\\int_0^{4000}\\frac{1}{(103237+y^\*)^{23.25}}dy^\*\\\\
+&=103237^{22.25}22.25\\int\_{103237}^{107237}u^{-23.25}du\\\\
+&=103237^{22.25}22.25\\left( \\frac{-1}{22.25(107237)^{22.25}}+\\frac{1}{22.25(103237)^{22.25}} \\right)\\\\
+&=-\\left(  \\frac{103237}{107237} \\right)^{22.25}+1\\\\
+\\textsf{Pr}(y^\* \< 4000\\mid\\boldsymbol{y})&=0.5708
+\\end{split}
+$$
+Empleando el código de r se obtuvo que Pr(*λ*\<4000∣**y**) = 0.2155,
+como se mencionaba anteriormente, ambas cantidades no son iguales por lo
+que son inferencia sobre cosas distintas como se explicaba
+anteriormente, estos resultados dan soporte de la afirmación mencionada
+anteriormente.
+
+## Punto 8
+
+Pruebe el sistema de hipótesis *H*<sub>0</sub> : *λ* = *λ*<sub>0</sub>
+frente a *H*<sub>1</sub> : *λ* ≠ *λ*<sub>0</sub>, con
+*λ*<sub>0</sub> = 4000. Para ello tenga en cuenta que
+$$
+    p(\\boldsymbol{y}\\mid H_0) = \\int\_{0}^\\infty \\lambda_0^{-n}\\exp{\\left(-\\tfrac{1}{\\lambda_0}\\textstyle\\sum\_{i=1}^n y_i\\right)}\\,\\delta\_{\\lambda_0}(\\lambda)\\,\\text{d}\\lambda
+    $$
+y
+$$
+    p(\\boldsymbol{y}\\mid H_1) = \\int\_{0}^\\infty \\lambda^{-n}\\exp{\\left(-\\tfrac{1}{\\lambda}\\textstyle\\sum\_{i=1}^n y_i\\right)}\\,\\frac{\\beta_0^{\\alpha_0}}{\\Gamma(\\alpha_0)}\\lambda^{-(\\alpha_0+1)}\\exp{\\left(-\\frac{\\beta_0}{\\lambda}\\right)}\\,\\text{d}\\lambda
+    $$
+donde *δ*<sub>*a*</sub>(*x*) es la función delta de Dirac. Reporte el
+factor de Bayes *B*<sub>10</sub> e interprete los resultados.
+
+### solución:
+
+El factor de bayes es una cantidad empleada para evaluar un sistema de
+hipótesis, en este caso, el sistema que se planea evaluar es
+*H*<sub>0</sub> : *λ* = 4000 y *H*<sub>1</sub> : *λ* ≠ 4000, para esto
+se calcula el factor de bayes de la siguiente manera
+
+$$
+\\begin{split}
+B\_{10}=\\frac{Pr(\\vec{y}\|H_1)}{Pr(\\vec{y}\|H_0)}&=\\frac{\\int\_{0}^\\infty \\lambda^{-n}\\exp{\\left(-\\tfrac{1}{\\lambda}\\textstyle\\sum\_{i=1}^n y_i\\right)}\\,\\frac{\\beta_0^{\\alpha_0}}{\\Gamma(\\alpha_0)}\\lambda^{-(\\alpha_0+1)}\\exp{\\left(-\\frac{\\beta_0}{\\lambda}\\right)}\\,\\text{d}\\lambda}{\\int\_{0}^\\infty \\lambda_0^{-n}\\exp{\\left(-\\tfrac{1}{\\lambda_0}\\textstyle\\sum\_{i=1}^n y_i\\right)}\\,\\delta\_{\\lambda_0}(\\lambda)\\,\\text{d}\\lambda}\\\\
+&=\\frac{\\frac{\\beta_0^{\\alpha_0}}{\\Gamma(\\alpha_0)}\\int\_{0}^\\infty\\lambda^{-(\\alpha+n+1)}\\exp{\\left(-\\tfrac{\\beta_0+\\textstyle\\sum\_{i=1}^ny_i}{\\lambda}\\right)\\text{d}\\lambda}}{\\lambda_0^{-n}\\exp{\\left(-\\tfrac{1}{\\lambda_0}\\textstyle\\sum\_{i=1}^n y_i\\right)}\\int\_{0}^\\infty\\delta\_{\\lambda_0}(\\lambda)\\text{d}\\lambda}\\\\
+&=\\frac{\\frac{\\beta_0^{\\alpha_0}}{\\Gamma(\\alpha_0)}\\frac{\\Gamma(\\alpha_0+n)}{(\\beta_0+s)^{\\alpha_0+n}}}{\\lambda_0^{-n}\\exp{\\left(-\\tfrac{s}{\\lambda_0}\\right)}}
+\\end{split}
+$$
+Remplazando por *β*<sub>0</sub> = 32625, *α*<sub>0</sub> = 8.25,
+*s* = 70612, *n* = 14 y *λ*<sub>0</sub> = 4000 se tiene la siguiente
+ecuación
+$$
+\\begin{split}
+B\_{10}&=\\frac{\\left(\\frac{32625}{103237}\\right)^{8.25}\\frac{\\Gamma(22.25)}{\\Gamma(8.25)(103237)^{14}}}{4000^{-14}e^{-17.653}}\\\\
+&=\\left(\\frac{32625}{103237}\\right)^{8.25}\\left(\\frac{4000}{103237}\\right)^{14}\\frac{\\Gamma(22.25)e^{17.653}}{\\Gamma(8.25)}\\\\
+&=0.782391
+\\end{split}
+$$
+Como se puede apreciar, el factor de Bayes da menor a 1. Un valor
+*B*<sub>10</sub> \< 1 indica que nos inclinamos por *H*<sub>0</sub>
+debido a que es más probable dado los datos observados. Haciendo una
+comparativa a la visión frecuentista, esta tampoco la hubiera rechazado
+con una significancia del 5% ya que este valor cae dentro del intervalo
+de confianza calculado al 95% de confianza.
+
+## Punto 9
+
+Experimentación adicional bajo las mismas condiciones con otro tipo de
+alambre (Tipo 2) produjo los siguientes resultados:
+294   569   766   1576   1602   2015   2166   3885   8141   10285
+Considerando modelos independientes de la forma
+$y\_{i,k} \\mid \\lambda_k \\stackrel{ \\mbox{\\footnotesize iid} }{ \\sim } \\textsf{Exp} ( \\lambda_k )$
+con *λ*<sub>*k*</sub> ∼ GI(*α*<sub>0</sub>,*β*<sub>0</sub>), para
+*i* = 1, …, *n*<sub>*k*</sub> y *k* = 1, 2, donde *y*<sub>*i*, *k*</sub>
+es el tiempo de falla del alambre *i* de tipo *k*, y *n*<sub>*k*</sub>
+es el número de alambres de tipo *k* sometidos a experimentación (la
+distribución previa es la misma para ambos tipos de alambre). Pruebe el
+sistema de hipótesis *H*<sub>0</sub> : *λ*<sub>1</sub> = *λ*<sub>2</sub>
+frente a *H*<sub>1</sub> : *λ*<sub>1</sub> ≠ *λ*<sub>2</sub>. Reporte el
+factor de Bayes *B*<sub>10</sub> e interprete los resultados.
+
+### solución:
+
+Primero se plantea la consecuencia de la hipótesis nula, en esta se
+tiene que ambos lambda son iguales (el tiempo promedio de falla) por
+consiguiente, ambos manejan un mismo *λ*.
+
+Para evaluar el sistema de hipótesis se plantea el siguiente factor de
+Bayes
+$$
+B\_{10}=\\frac{P(\\vec{y_1},\\vec{y_2}\|H_0)}{P(\\vec{y_1},\\vec{y_2}\|H_1)}
+$$
+
+Donde
+$$
+\\begin{split}
+P(\\vec{y_1},\\vec{y_2}\|H_0)&=\\int\_{\\lambda}\\underbrace{P(\\lambda\|H_0)}\_{distribucion \\ previa \\ dado \\ H_0} \\overbrace{P(\\vec{y_1},\\vec{y_2}\|\\lambda,H_0)}^{distribucion \\ muestral \\ conjunta \\ dado \\ H_0} d\\lambda\\\\
+&=\\int\_{\\lambda}\\frac{\\beta_0^{\\alpha_0}}{\\Gamma(\\alpha_0)}\\lambda^{-(\\alpha_0+1)}\\exp{\\left( -\\frac{\\beta_0}{\\lambda}\\right)} \\lambda^{-(n_1+n_2)} \\exp{\\left( -\\frac{s_1+s_2}{\\lambda} \\right)} d\\lambda\\\\
+&=\\frac{\\beta_0^{\\alpha_0}}{\\Gamma(\\alpha_0)}\\int\_{\\lambda}\\lambda^{-(\\alpha_0+n_1+n_2)}\\exp{\\left( \\frac{-(\\beta_0+s_1+s_2)}{\\lambda} \\right)}d\\lambda\\\\
+&=\\frac{\\beta_0^{\\alpha_0}}{\\Gamma(\\alpha_0)}\\frac{\\Gamma(\\alpha_0+n_1+n_2)}{(\\beta_0+s_1+s_2)^{(\\alpha_0+n_1+n_2)}}
+\\end{split}
+$$
+Donde *β*<sub>0</sub> es el beta previo, *α*<sub>0</sub> es el alpha de
+la distribución previa, *n*<sub>1</sub> es el tamaño de la muestra del
+alambre tipo 1, *n*<sub>2</sub> es el tamaño de la muestra del alambre
+tipo 2, *s*<sub>1</sub> es la suma de los tiempos de fallo de la muestra
+de alambres tipo 1 y *s*<sub>2</sub> es la suma de los tiempos de fallo
+de la muestra de alambres tipo 2.
+
+Por otro lado se tiene según *H*<sub>1</sub> que ambos lambdas son
+distintos, es decir que tendremos dos parámetros
+(*λ*<sub>1</sub> y *λ*<sub>2</sub>) además de que cada distribución
+muestral y previa serán distintas, eso se traduce a la hora de encontrar
+la verosimilitud marginal como encontrar la integral por cada parámetro
+y, que la distribución conjunta de la previa y la muestral es la
+multiplicación de dos idénticas distribuciones con lambdas distintos, a
+continuación se aprecia ese cálculo.
+$$
+\\begin{split}
+P(\\vec{y_1},\\vec{y_2}\|H_1)&=\\int\_{\\lambda_1}\\int\_{\\lambda_2}p(\\lambda_1)p(\\lambda_2)p(\\vec{y_1}\|\\lambda_1)p(\\vec{y_2}\|\\lambda_2)d\\lambda_2d\\lambda_1\\\\
+&=\\int\_{\\lambda_1}p(\\lambda_1)p(\\vec{y_1}\|\\lambda_1)d\\lambda_1\\int\_{\\lambda_2}p(\\lambda_2)p(\\vec{y_2}\|\\lambda_2)d\\lambda_2\\\\
+&=\\left( \\frac{\\beta_0^{\\alpha_0}}{\\Gamma(\\alpha_0)} \\right)^2 \\int\_{\\lambda_1}\\lambda_1^{-(\\alpha_0+n_1+1)}\\exp{\\left( -\\frac{(\\beta_0+s_1)}{\\lambda_1} \\right)}d\\lambda_1\\int\_{\\lambda_2}\\lambda_2^{-(\\alpha_0+n_2+1)}\\exp{\\left( -\\frac{(\\beta_0+s_2)}{\\lambda_2} \\right)}d\\lambda_2\\\\
+P(\\vec{y_1},\\vec{y_2}\|H_1)&=\\left( \\frac{\\beta_0^{\\alpha_0}}{\\Gamma(\\alpha_0)}\\right)^2\\frac{\\Gamma(\\alpha_0+n_2)}{(\\beta_0+s_2)^{(\\alpha_0+n_2)}}\\frac{\\Gamma(\\alpha_0+n_1)}{(\\beta_0+s_1)^{(\\alpha_0+n_1)}}
+\\end{split}
+$$
+Ya teniendo esas cantidades, ahora se calcula el factor de Bayes para
+este sistema de hipótesis
+$$
+B\_{10}=\\frac{\\left( \\frac{\\beta_0^{\\alpha_0}}{\\Gamma(\\alpha_0)} \\right)\\Gamma(\\alpha_0+n_2)\\Gamma(\\alpha_0+n_1)(\\beta_0+s_1+s_2)^{(\\alpha_0+n_1+n_2)}}{\\Gamma(\\alpha_0+n_1+n_2)(\\beta_0+s_2)^{(\\alpha_0+n_2)}(\\beta_0+s_1)^{(\\alpha_0+n_1)}}
+$$
+Desarrollando esto a través de código en r y remplazando cada uno de los
+valores de la ecuación por los del caso. Se tiene que
+*B*<sub>10</sub> = 1.18, este resultado siguiendo a Kass (1995). Aunque
+existe una mayor probabilidad para *H*<sub>1</sub>, no es muy decisiva
+por sobre la de *H*<sub>0</sub>.
+
+Aterrizando este resultado al contexto del problema, se dice que hay
+evidencia en los datos para decir que el tipo de alambre si afecta el
+tiempo de falla del mismo (los lambda son distintos), aunque la
+evidencia no sea muy decantada a este hecho.
+
+## Punto 10
+
+Verifique la idoneidad del modelo para ambos tipos de alambre empleando
+como estadística de prueba la media del tiempo de falla. Presente sus
+resultados gráficamente comparando la distribución predictiva posterior
+con el valor observado correspondiente. Así mismo, reporte el valor *p*
+predictivo posterior en cada caso.
+
+### solución:
+
+Mediante métodos de Montecarlo es posible aproximar la distribución del
+estadístico de prueba, teniendo en cuenta el modelo jerárquico bajo el
+cual suponemos que se generan los datos. simulando por etapas, primero
+de la distribución posterior del parámetro y luego, con cada simulación
+del parámetro, tantas simulaciones de la distribución muestral como
+hemos observado. De esta manera, se obtienen muestras de las cuales
+calcular el estadístico de prueba, la media en este caso, y por lo tanto
+una aproximación de las características de su distribución.
+
+![](bayes-parcial1-Sergio-Andrés-Niño-Marín-Sergio-Andres-Gerena-Gomez_files/figure-markdown_github/grafico%20datos%201%20-1.png)
+
+![](bayes-parcial1-Sergio-Andrés-Niño-Marín-Sergio-Andres-Gerena-Gomez_files/figure-markdown_github/grafico%20datos%202%20-1.png)
 
 ## References
 
-\<!– placeholder for References in toc –!>
+Kass, R. E., & Raftery, A. E. (1995). Bayes factors. Journal of the
+american statistical association, 90(430), 773-795.
+
+Mazucheli, J.(2017).Package ‘mle.tools’.Recuperado de:
+<https://cran.r-project.org/web/packages/mle.tools/mle.tools.pdf>
+
+Kahle,D. Stamey, J.(2017).Package ‘invgamma’.Recuperado
+de:<https://cran.r-project.org/web/packages/invgamma/invgamma.pdf>

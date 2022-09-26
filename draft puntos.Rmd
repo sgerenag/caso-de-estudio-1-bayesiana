@@ -21,7 +21,7 @@ knitr::opts_chunk$set(echo = TRUE)
  set.seed(1234)
 
 lambda <- seq(0.005, 10000, length = 10000)
-plot(NA, NA, xlim = c(1000,10000),ylim = c(0,0.0004091411),  xlab = expression(lambda), ylab = "densidad", main = "Posterior")
+plot(NA, NA, xlim = c(1000,10000),ylim = c(0,0.0004091411),  xlab = expression(lambda), ylab = "densidad", main = "comparacion distribucion posterior y previa")
 lines(lambda, dinvgamma(lambda,33/4 , 33625), col = 2, lwd = 2)
 lines(lambda, dinvgamma(lambda,33/4 + 14,  33625 +70612 ), col = 4, lwd = 2)
 abline(h = 0, col = 1)
@@ -99,6 +99,7 @@ bayes10_dif0<-((32625/103237)**8.25)*((4000/103237)**14)*((gamma(22.25)*exp(17.6
 
 ```{r Factor bayes distintos }
 library(invgamma)
+datos2 <- c(294, 569, 766, 1576, 1602, 2015, 2166, 3885, 8141, 10285)
 n2 <- length(datos2)
 s2 <- sum(datos2)
 
@@ -120,7 +121,7 @@ library(invgamma)
 
 muestras_lambda1 <- rinvgamma(10000,alpha_post1,beta_post1)
 
-datos2 <- c(294, 569, 766, 1576, 1602, 2015, 2166, 3885, 8141, 10285)
+
 
 alpha_post2 <- (33/4) + length(datos2)
 beta_post2 <- 32625 + sum(datos2)
@@ -142,7 +143,7 @@ for (i in 1:10000) {
   
   y2_rep  <- rexp(n = length(datos2), rate = 1/muestras_lambda2[i])
  
-  medias_pred2[i] <- mean(y1_rep)
+  medias_pred2[i] <- mean(y2_rep)
 }
 
 ppp1 <- sum((medias_pred1 > mean(datos1))/length(medias_pred1))
@@ -155,7 +156,7 @@ ppp2 <- sum((medias_pred2 > mean(datos2))/length(medias_pred2))
 
 ```{r grafico datos 1}
 par(mar = c(3,3,1.4,1.4), mgp = c(1.75,.75,0))
-hist(x = y1_rep, freq = F, col = "gray90", border = "gray90", xlab = "t", ylab = "p(t | y)", main = "" , xlim = c(0,20000))
+hist(x = y1_rep, freq = F, col = "gray90", border = "gray90", xlab = "t", ylab = "p(t | y)", main = "Grafico estadistico de prueba set alambres 1" , xlim = c(0,20000))
 lines(density(y1_rep), col = 4, lwd = 2)
 abline(v = mean(datos1), col = 1, lwd = 2, lty = 1)
 abline(v = quantile(x = datos1, probs = c(0.025, 0.975)), lty = 2, lwd = 2, col = 2)
@@ -165,7 +166,7 @@ legend("topright", legend = c("Posterior", "IC 95%", "media obs"), col = c(4, 2,
 
 ```{r grafico datos 2}
 par(mar = c(3,3,1.4,1.4), mgp = c(1.75,.75,0))
-hist(x = y2_rep, freq = F, col = "gray90", border = "gray90", xlab = "t", ylab = "p(t | y)", main = "")
+hist(x = y2_rep, freq = F, col = "gray90", border = "gray90", xlab = "t", ylab = "p(t | y)", main = "Grafico estadistico de prueba set alambres 2")
 lines(density(y2_rep), col = 4, lwd = 2)
 abline(v = mean(datos2), col = 1, lwd = 2, lty = 1)
 abline(v = quantile(x = datos2, probs = c(0.025, 0.975)), lty = 2, lwd = 2, col = 2)
