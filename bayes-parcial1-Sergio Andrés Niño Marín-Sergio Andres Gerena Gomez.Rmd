@@ -44,7 +44,7 @@ A partir de este contexto, Su incertidumbre acerca de estos datos antes de que f
 \end{equation}
 
 
-## Pregunta 1{-}
+## Pregunta 1 estadístico suficiente {-}
 Muestre que $s=\sum_{i=1}^n y_i$ es un estadístico suficiente para $\lambda$.
 
 ### Solución:{-}
@@ -57,7 +57,7 @@ $$
 $$
 Con esto, vemos que un estadístico suficiente es $s=\sum_{i=1}^ny_i$ dado que este estadístico cumple al poderse factorizar de la expresión de verosimilitud en una función g que solo depende del estadístico suficiente y el parámetro.
 
-## Pregunta 2{-}
+## Pregunta 2 Gamma inversa {-}
 Se dice que la variable aleatoria $X$ tiene distribución Gamma-Inversa con parámetros $\alpha>0$ y $\beta>0$, si la función de densidad de $X$ está dada por:
 	$$
 	X \sim \textsf{GI} ( \alpha, \beta )\text{,} \ \ \ \textrm{i.e.,} \ \ \ 
@@ -80,7 +80,7 @@ P\left( \frac{1}{X}\right)=P\left( Y \right)&=\frac{\beta^{\alpha}}{\Gamma(\alph
 $$
 Dado que lo obtenido al aplicar el teorema de transformación fue la distribución descrita como Gamma inversa ($GI$) con los respectivos parámetros, podemos asegurar que la afirmación propuesta en el punto resulta verdadera.
 
-## Punto 3{-}
+## Punto 3 Posterior conjugada {-}
 Considere la distribución previa $\lambda \sim \textsf{GI} ( \alpha, \beta )$ junto con la distribución muestral \eqref{exponential-model-1}. Halle la distribución posterior de $\lambda$.
 
 ### solución: {-}
@@ -95,11 +95,11 @@ p(\lambda|\vec{y})&\propto \lambda^{-(\alpha +n +1)}exp\left( \frac{-(\beta + s)
 \end{split}
 $$
 
-## Punto 4{-}
+## Punto 4 Información externa {-}
 Se tiene información externa de otro experimento de acuerdo con el cual la distribución previa de $\lambda$ debería tener una media $\mu_0 = 4500$ y una desviación estándar $\sigma_0 = 1800$. Haga un gráfico de las distribuciones previa y posterior en el mismo gráfico.
 
 ### solución: {-}
-Lo primero es, encontrar los hiperparametros de la distribución previa tal que satisfaga la media $\mu_0 = 4500$ y la desviación estándar $\sigma_0 = 1800$, dando el siguiente sistema de ecuaciones:
+Lo primero es encontrar los hiperparametros de la distribución previa, tal que satisfaga la media $\mu_0 = 4500$ y la desviación estándar $\sigma_0 = 1800$, dando el siguiente sistema de ecuaciones:
 $$
 \begin{split}
 4500&=\frac{\beta_0}{\alpha_0-1}\ \ \ \ \ \ \ para \ \alpha_0 >1\\
@@ -109,9 +109,9 @@ $$
 
 Resolviendo el sistema de ecuaciones, tenemos que $\alpha_0=8.25$ y $\beta_0=32625$. con esto ya se puede construir la distribución previa.
 
-Ahora, en base al punto anterior donde se calculó la distribución posterior para este modelo sigue la forma $GI(\alpha +n, \beta +s)$ donde $n$ es el tamaño de la muestra y $s$ es la suma de todos los $y_i$. Empleando una suma sobre los 14 términos que se tiene en los datos, resulta que $n=14$ y $s=70612$.
+Ahora, en base al punto anterior, donde se calculó la distribución posterior para este modelo, la cual tiene  la forma $GI(\alpha +n, \beta +s)$; donde $n$ es el tamaño de la muestra y $s$ es la suma de todos los $y_i$. Empleando una suma sobre los 14 términos observados en los datos, resulta que $n=14$ y $s=70612$.
 
-Ahora sigue construir y graficar ambas distribuciones, tanto la previa como la posterior, usando código en R para realizar dicha acción, el resultado es el observado a continuación
+Ahora sigue construir y graficar ambas distribuciones. Tanto la previa como la posterior, usando código en R para realizar dicha acción, el resultado es el siguiente:
 
 ```{r ,echo = FALSE}
 library(invgamma)
@@ -129,11 +129,11 @@ abline(h = 0, col = 1)
 legend("topright", legend = c( "Previa" ,"media previa", "posterior","media posterior"), bty = "n", lwd = 2, col = c(2,1,4,3))
 ```
 
-## Punto 5 {-}
+## Punto 5 MLE {-}
 Halle el estimador de máxima verosimilitud (MLE, por sus siglas en inglés) de $\lambda$.
 
 ### solución: {-}
-Para encontrar el estimador de máxima verosimilitud, lo primero es calcular la función de verosimilitud del parámetro dada la muestra y a dicha función se le encuentra el máximo global, pero antes, se usa la parametrización de la exponencial donde $\theta=\frac{1}{\lambda}$, luego de encontrar el MLE para dicho parámetro, se emplea la invarianza funcional del estimador MLE para encontrar el estimador MLE de $\lambda$.
+Para encontrar el estimador de máxima verosimilitud, lo primero es calcular la función de verosimilitud del parámetro dada la muestra y encontrar el máximo global de dicha función. Pero antes, se usará la parametrización de la exponencial donde $\theta=\frac{1}{\lambda}$, luego de encontrar el MLE para dicho parámetro, se emplea la invarianza funcional del estimador MLE para encontrar el estimador MLE de $\lambda$.
 
 Se empieza encontrando la función de verosimilitud del parámetro $\theta$ de la siguiente manera
 $$
@@ -143,7 +143,7 @@ $$
 &=\theta^ne^{-\theta\sum_{i=1}^ny_i}
 \end{split}
 $$
-Para simplificar la notación y también las matemáticas en los siguientes pasos, se usa como convención que $s=\sum_{i=1}^n$ además de que en el proceso de maximización se emplea la función log-verosimilitud $\mathcal{l}(\theta|\vec{y})$ la cual es el logaritmo natural de la anteriormente encontrada.
+Para simplificar la notación y también las matemáticas en los siguientes pasos, se usa como convención que $s=\sum_{i=1}^n y_i$ . Además, en el proceso de maximización se emplea la función log-verosimilitud $\mathcal{l}(\theta|\vec{y})$, la cual es el logaritmo natural de la anteriormente encontrada.
 
 Siguiendo con la maximización de la función, primero se encuentran los puntos críticos empleando la primera derivada
 $$
@@ -154,13 +154,13 @@ $$
 \hat{\theta}&=\frac{n}{s}
 \end{split}
 $$
-para evaluar el punto crítico encontrado se aplica el criterio de la segunda derivada, en el tenemos como criterio especial que si la función es siempre negativa en todo el soporte, el punto encontrado es un máximo global.
+para evaluar el punto crítico encontrado se aplica el criterio de la segunda derivada. En él, tenemos como criterio especial que si la función es siempre negativa en todo el soporte, el punto encontrado es un máximo global.
 $$
 \frac{\delta}{\delta \theta}(\frac{n}{\theta}-s)=-\frac{n}{\theta^2}
 $$
-Se tiene que la función obtenida es siempre negativa ya que $n>0$ al igual que $\theta^2 >0$, por lo que el punto crítico encontrado no solo es un máximo local sino también, un máximo global, al ser así se tiene entonces que $\hat{\theta}_{MLE}=\frac{n}{s}$.
+Se tiene que la función obtenida es siempre negativa ya que $n>0$ al igual que $\theta^2 >0$. Por lo tanto, el punto crítico encontrado no solo es un máximo local, sino también un máximo global. Se tiene, entonces, que $\hat{\theta}_{MLE}=\frac{n}{s}$.
 
-Ahora trabajamos con la invarianza funcional del estimador MLE para encontrar el estimador de máxima verosimilitud de $\lambda =\frac{1}{\theta}$, tenemos entonces que.
+Ahora trabajamos con la invarianza funcional del estimador MLE para encontrar el estimador de máxima verosimilitud de $\lambda =\frac{1}{\theta}$. Tenemos, entonces, que:
 $$
 \begin{split}
 \hat{g(\theta)}_{MLE}&=g(\hat{\theta}_{MLE})\\
@@ -169,7 +169,7 @@ $$
 \end{split}
 $$
 
-## Punto 6{-}
+## Punto 6 Comparación métodos{-}
 Complete la siguiente tabla:
 	\begin{table}[h!]
 		\centering
@@ -195,11 +195,11 @@ Complete la siguiente tabla:
 #### Enfoque Bayesiano {-} 
 
 
-Para completar la fila mediante el método bayesiano, se parte de la distribución posterior encontrada anteriormente $GI(22.25,104237)$, Donde para crear una estimación puntual del parámetro se hace uso de la media de la distribución posterior $\mu_p=\frac{\beta}{\alpha -1}$. Para el coeficiente de variación se tiene que $CV\%=\frac{\sigma}{\mu}*100$ donde $\sigma$ es la desviación estándar de la distribución posterior y $\mu$ la media de la misma.
+Para completar la fila mediante el método bayesiano, se parte de la distribución posterior encontrada anteriormente $GI(22.25,104237)$. Donde, para crear una estimación puntual del parámetro, se hace uso de la media de la distribución posterior $\mu_p=\frac{\beta}{\alpha -1}$. Para el coeficiente de variación se tiene que $CV\%=\frac{\sigma}{\mu}*100$ donde $\sigma$ es la desviación estándar de la distribución posterior y $\mu$ la media de la misma.
 
-Para el intervalo, que en el panorama estadístico se denomina región de confianza, se plantea un $(l,u)$ tal que $p(l<\lambda<u|\vec{y})=0.95$, así para encontrar los límites del intervalo se emplean los cuantiles de la distribución posterior tal que $l=\lambda_{0.025}$ y $u=\lambda_{0.975}$ de forma tal que se encierre la probabilidad pedida.
+Para el intervalo, que en el panorama estadístico se denomina región de confianza, se plantea un $(l,u)$ tal que $p(l<\lambda<u|\vec{y})=0.95$. Así, para encontrar los límites del intervalo, se emplean los cuantiles de la distribución posterior, tal que $l=\lambda_{0.025}$ y $u=\lambda_{0.975}$, de forma tal que se encierre la probabilidad pedida.
 
-Realizando estos cálculos empleando R se llega a los siguientes resultados:
+Realizando estos cálculos, empleando R, se llega a los siguientes resultados:
 \begin{itemize}
   \item $\mu_p=4638.865$
   \item $CV\%=23.27\%$
@@ -209,11 +209,11 @@ Realizando estos cálculos empleando R se llega a los siguientes resultados:
 #### Enfoque frecuentista asintótico {-} 
 
 
-Para la parte frecuentista asintótico, se parte de la base que $\hat\lambda_{\text{MLE}}\approx\textsf{N}(\lambda,\hat{I}^{-1})$. Para la estimación puntual esto no afecta ya que se emplea el estimador encontrado en el punto 5, que es igual a la media muestral.
+Para la parte frecuentista asintótica, se parte de la base que $\hat\lambda_{\text{MLE}}\approx\textsf{N}(\lambda,\hat{I}^{-1})$. Para la estimación puntual esto no afecta ya que se emplea el estimador encontrado en el punto 5, que es igual a la media muestral.
 
-Para el CV se plantea primero, gracias a la librería mle.tools, encontrar la información de Fisher para el parámetro lambda, una vez realizado esto, se tiene que $CV\%=\frac{\sqrt{\frac{1}{I_n}}}{\hat{\lambda}_{MLE}}*100$.
+Para el CV se plantea primero, gracias a la librería mle.tools, encontrar la información  observada de Fisher para el parámetro lambda, una vez realizado esto, se tiene que $CV\%=\frac{\sqrt{\frac{1}{I_n}}}{\hat{\lambda}_{MLE}}*100$.
 
-Por último, en el intervalo de confianza, ya que se tiene la distribución asintótica, se plantea la variable pivote de forma tal que $Q(\vec{y},\lambda)=\sqrt{I_n}(\hat{\lambda}_{MLE}-\lambda)\approx N(0,1)$, de la ecuación presentada se despeja $\lambda$ y se acotan los intervalos de la siguiente manera
+Por último, en el intervalo de confianza, ya que se tiene la distribución asintótica, se plantea la variable pivote de forma tal que $Q(\vec{y},\lambda)=\sqrt{I_n}(\hat{\lambda}_{MLE}-\lambda)\approx N(0,1)$. De la ecuación presentada se despeja $\lambda$ y se acotan los intervalos de la siguiente manera:
 $$
 \begin{split}
 p\left( z_{0.025}< \sqrt{I_n}(\hat{\lambda}_{MLE}-\lambda)<z_{0.975} \right)&=0.95\\
@@ -229,15 +229,15 @@ A continuación, se muestra la lista de los datos pedidos
   \item $IC_{95\%}=(2402,7686)$
 \end{itemize}
 
-#### Enfoque frecuentista boostrap
+#### Enfoque frecuentista boostrap {-}
 
-En este, se generan varios samples con remplazo del mismo tamaño de los datos, esto con el fin de generar un vector de tamaño 10000 con 10000 muestras creadas a partir de samples random de los datos.
+En este, se generan varios remuestreos con remplazo, del mismo tamaño de los datos. Esto con el fin de generar un vector de tamaño 10000 con 10000 muestras creadas a partir de muestras aleatoreas de los datos; asumiendo que la muestra original es representativa.
 
-Lo que se hace con este vector es sacarle la media a cada conjunto de datos creado, esto debido a que en el paradigma frecuentista, el estimador MLE para el parámetro era la media muestral, de esta manera se obtiene un vector de medias de tamaño 10000, uno por cada muestra generada mediante boostrap.
+Lo que se hace con este vector es sacarle la media a cada conjunto de datos creado, esto debido a que en el paradigma frecuentista, el estimador MLE para el parámetro era la media muestral, de esta manera se obtiene un vector de medias de tamaño 10000, uno por cada muestra generada mediante boostrap, a partir del cual podemos aproximar la distribución del estadístico.
 
-Para los datos pedidos en la tabla, se hace inferencia respecto a ese vector de medias, la estimación puntual del parámetro seria la media del vector de medias, para el CV, se toma la varianza del vector de media así como su media, con la varianza empírica del vector obtenemos la desviación estándar empírica y siguiendo la formula $CV\%=\frac{\sigma_{empirica}}{\mu_{empirico}}*100$ se calcula el CV.
+Para los datos pedidos en la tabla, se hace inferencia usando las características empíricas de ese vector de medias. La estimación puntual del parámetro seria la media del vector de medias, para el CV, se toma éste últico junto con la varianza del vector de medias. Con la varianza empírica del vector, obtenemos la desviación estándar empírica y siguiendo la formula $CV\%=\frac{\sigma_{empirica}}{\mu_{empirico}}*100$ se calcula el CV.
 
-Para el intervalo de confianza, se manejan los cuantiles del vector de medias, esto debido a que estamos usando este mismo como una distribución del verdadero parámetro, los cuantiles tomados tal que satisfagan los requerimientos de confianza pedidos son el $0.025$ y $0.975$.
+Para el intervalo de confianza, se manejan los cuantiles del vector de medias, esto debido a que estamos usando este mismo como una aproximación de la distribución del verdadero parámetro. Los cuantiles tomados tal que satisfagan los requerimientos de confianza pedidos son el $0.025$ y $0.975$.
 
 A continuación, se presenta los valores calculados por este método:
 \begin{itemize}
@@ -259,16 +259,16 @@ La tabla completa se puede ver a continuación
 		\end{tabular}\caption{Inferencia Bayesiana y Frecuentista sobre $\lambda$ Completa.}
 	\end{table}
 
-## Punto 7 {-}
+## Punto 7  posterior y posterior predictiva {-}
 
 Calcule e interprete $\textsf{Pr}(\lambda < 4000\mid\boldsymbol{y})$ y $\textsf{Pr}(y^* < 4000\mid\boldsymbol{y})$, donde $y^*$ es un tiempo de falla futuro.
 
 ### solución: {-}
-El primero resulta ser la probabilidad de que lambda sea menor a 4000 una vez se observaron los datos, se sabe que esto se cuantifica con la distribución posterior. Para el cálculo de esta cantidad se emplea la librería invgamma, donde se encuentra pinvgamma para calcular la probabilidad acumulada hasta cierto valor, la función que se envía es la que ya se encontró para la distribución posterior.
+El primero resulta ser la probabilidad de que lambda sea menor a 4000, una vez se observaron los datos. Esto se cuantifica con la distribución posterior de lambda. Para su cálculo se empleó la librería invgamma, donde se encuentra la función pinvgamma;con la cual se calcula la probabilidad acumulada hasta cierto valor; a esta función se le entrega  la distribución posterior encontrada en los incisos anteriores.
 
-La segunda probabilidad pedida es la de predicción, esta quiere decir cuál es la probabilidad de que un dato no observado (que no es parte de la muestra) sea menor a 4000, como se observa, ambas son cantidades distintas ya que hacen inferencia sobre cantidades distintas, la distribución posterior hace inferencia sobre el parámetro en cambio, la función predictiva posterior hace referencia a el valor que puede tomar una unidad no observada, es decir, la probabilidad de que el tiempo de falla de un nuevo alambre sea menor a 4000.
+La segunda probabilidad pedida es  predicción sobre un nuevo valor. Esta quiere decir cuál es la probabilidad de que un dato no observado (que no es parte de la muestra) sea menor a 4000. Como se puede notar, ambas son cantidades distintas;  hacen inferencia sobre entidades distintas. La distribución posterior hace inferencia sobre el parámetro. En cambio, la función predictiva posterior hace inferencia sobre el valor que puede tomar una unidad no observada, es decir, la probabilidad de que el tiempo de falla de un nuevo alambre sea menor a 4000.
 
-Para calcular la probabilidad acumulada de la distribución predictiva primero hay que encontrar la misma, para eso se usa la siguiente ecuación:
+Para calcular la probabilidad acumulada para una nueva observació, primero hay que calcular la distribución predictiva posterior. Para eso, se usa la siguiente ecuación:
 $$
 \begin{split}
 p(y^*|\vec{y})&=\int_{\Theta}p(y^*|\lambda)p(\lambda|\vec{y})d\lambda\\
@@ -279,7 +279,7 @@ p(y^*|\vec{y})&=\int_{\Theta}p(y^*|\lambda)p(\lambda|\vec{y})d\lambda\\
 p(y^*|\vec{y})&=\left(\frac{\beta+s}{\beta+s+y^*}\right)^{\alpha+n}\frac{\alpha+n}{\beta+s+y^*}
 \end{split}
 $$
-Ya con la función de densidad de la predictiva posterior, se calcula $\textsf{Pr}(y^* < 4000\mid\boldsymbol{y})$ aplicando la integral sobre esta desde 0 hasta 4000, ya que los valores que puede tomar la variable son los positivos dada la definición de la misma, esta integral se observa a continuación.
+Ya con la función de densidad de la predictiva posterior, se calcula $\textsf{Pr}(y^* < 4000\mid\boldsymbol{y})$, aplicando la integral sobre esta desde 0 hasta 4000, ya que los valores que puede tomar la variable son los positivos, dada la definición de la misma. Esta integral se observa a continuación.
 $$
 \begin{split}
 \textsf{Pr}(y^* < 4000\mid\boldsymbol{y})&=\int_0^{4000}\left(\frac{\beta+s}{\beta+s+y^*}\right)^{\alpha+n}\frac{\alpha+n}{\beta+s+y^*}dy^*\\
@@ -291,9 +291,9 @@ $$
 \textsf{Pr}(y^* < 4000\mid\boldsymbol{y})&=0.5708
 \end{split}
 $$
-Empleando el código de r se obtuvo que $\textsf{Pr}(\lambda < 4000\mid\boldsymbol{y})=0.2155$, como se mencionaba anteriormente, ambas cantidades no son iguales por lo que son inferencia sobre cosas distintas como se explicaba anteriormente, estos resultados dan soporte de la afirmación mencionada anteriormente.
+Empleando código de r, se obtuvo que $\textsf{Pr}(\lambda < 4000\mid\boldsymbol{y})=0.2155$. Como se mencionaba anteriormente, ambas cantidades no son iguales porque son inferencias sobre objetos distintos.  Estos resultados reafirman  lo previamente mencionado.
 
-## Punto 8{-}
+## Punto 8 prueba de hipótesis valor del parámetro {-}
 Pruebe el sistema de hipótesis $H_0:\lambda=\lambda_0$ frente a $H_1:\lambda\neq\lambda_0$, con $\lambda_0=4000$. Para ello tenga en cuenta que 
 	$$
 	p(\boldsymbol{y}\mid H_0) = \int_{0}^\infty \lambda_0^{-n}\exp{\left(-\tfrac{1}{\lambda_0}\textstyle\sum_{i=1}^n y_i\right)}\,\delta_{\lambda_0}(\lambda)\,\text{d}\lambda
@@ -305,7 +305,7 @@ Pruebe el sistema de hipótesis $H_0:\lambda=\lambda_0$ frente a $H_1:\lambda\ne
 	donde $\delta_a(x)$ es la función delta de Dirac. Reporte el factor de Bayes $B_{10}$ e interprete los resultados.
 
 ### solución: {-}
-El factor de bayes es una cantidad empleada para evaluar un sistema de hipótesis, en este caso, el sistema que se planea evaluar es $H_0:\lambda=4000$ y $H_1:\lambda\neq4000$, para esto se calcula el factor de bayes de la siguiente manera
+El factor de bayes es una cantidad empleada para evaluar un sistema de hipótesis. En este caso, el sistema que se planea evaluar es $H_0:\lambda=4000$ y $H_1:\lambda\neq4000$, para esto se calcula el factor de bayes10 de la siguiente manera:
 
 $$
 \begin{split}
@@ -314,7 +314,7 @@ B_{10}=\frac{Pr(\vec{y}|H_1)}{Pr(\vec{y}|H_0)}&=\frac{\int_{0}^\infty \lambda^{-
 &=\frac{\frac{\beta_0^{\alpha_0}}{\Gamma(\alpha_0)}\frac{\Gamma(\alpha_0+n)}{(\beta_0+s)^{\alpha_0+n}}}{\lambda_0^{-n}\exp{\left(-\tfrac{s}{\lambda_0}\right)}}
 \end{split}
 $$
-Remplazando por $\beta_0=32625$, $\alpha_0=8.25$, $s=70612$, $n=14$ y $\lambda_0=4000$ se tiene la siguiente ecuación
+Remplazando por $\beta_0=32625$, $\alpha_0=8.25$, $s=70612$, $n=14$ y $\lambda_0=4000$ se tiene la siguiente ecuación:
 $$
 \begin{split}
 B_{10}&=\frac{\left(\frac{32625}{103237}\right)^{8.25}\frac{\Gamma(22.25)}{\Gamma(8.25)(103237)^{14}}}{4000^{-14}e^{-17.653}}\\
@@ -322,9 +322,9 @@ B_{10}&=\frac{\left(\frac{32625}{103237}\right)^{8.25}\frac{\Gamma(22.25)}{\Gamm
 &=0.782391
 \end{split}
 $$
-Como se puede apreciar, el factor de Bayes da menor a 1. Un valor $B_{10}<1$ indica que nos inclinamos por $H_0$ debido a que es más probable dado los datos observados. Haciendo una comparativa a la visión frecuentista, esta tampoco la hubiera rechazado con una significancia del $5\%$ ya que este valor cae dentro del intervalo de confianza calculado al $95\%$ de confianza.
+Como se puede apreciar, este factor de Bayes es menor a 1. Un valor $B_{10}<1$ indica que nos inclinamos por $H_0$, debido a que es más probable dado los datos observados. Haciendo una comparativa a la visión frecuentista, esta tampoco la hubiera rechazado con una significancia del $5\%$ ya que este valor cae dentro del intervalo de confianza calculado al $95\%$ de confianza.
 
-## Punto 9{-}
+## Punto 9 prueba de hipótesis diferentes parámetros {-}
 Experimentación adicional bajo las mismas condiciones con otro tipo de alambre (Tipo 2) produjo los siguientes resultados:
 	\[ 
         294\ \ \ 569 \ \ \ 766 \ \ \ 1576 \ \ \ 1602 \ \ \ 2015 \ \ \ 2166 \ \ \ 3885 \ \ \ 8141 \ \ \ 10285
@@ -336,7 +336,7 @@ Experimentación adicional bajo las mismas condiciones con otro tipo de alambre 
 
 ### solución: {-}
 
-Primero se plantea la consecuencia de la hipótesis nula, en esta se tiene que ambos lambda son iguales (el tiempo promedio de falla) por consiguiente, ambos manejan un mismo $\lambda$.
+Primero se plantea la consecuencia de la hipótesis nula. En esta, se tiene que ambos lambda son iguales (el tiempo promedio de falla). Por consiguiente, ambos manejan un mismo $\lambda$.
 
 Para evaluar el sistema de hipótesis se plantea el siguiente factor de Bayes
 $$
@@ -354,7 +354,7 @@ P(\vec{y_1},\vec{y_2}|H_0)&=\int_{\lambda}\underbrace{P(\lambda|H_0)}_{distribuc
 $$
 Donde $\beta_0$ es el beta previo, $\alpha_0$ es el alpha de la distribución previa, $n_1$ es el tamaño de la muestra del alambre tipo 1, $n_2$ es el tamaño de la muestra del alambre tipo 2, $s_1$ es la suma de los tiempos de fallo de la muestra de alambres tipo 1 y $s_2$ es la suma de los tiempos de fallo de la muestra de alambres tipo 2.
 
-Por otro lado se tiene según $H_1$ que ambos lambdas son distintos, es decir que tendremos dos parámetros ($\lambda_1 \ \text{y} \ \lambda_2$) además de que cada distribución muestral y previa serán distintas, eso se traduce a la hora de encontrar la verosimilitud marginal como encontrar  la integral por cada parámetro y, que la distribución conjunta de la previa y la muestral es la multiplicación de dos idénticas distribuciones con lambdas distintos, a continuación se aprecia ese cálculo.
+Por otro lado se tiene, según $H_1$, que ambos lambdas son distintos. Es decir que tendremos dos parámetros ($\lambda_1 \ \text{y} \ \lambda_2$). Además, cada distribución muestral y previa serán distintas. Esto se aprecia tanto a la hora de encontrar la verosimilitud marginal como encontrar  la integral por cada parámetro. También enlas distribuciones conjuntas  previa y  muestral. 
 $$
 \begin{split}
 P(\vec{y_1},\vec{y_2}|H_1)&=\int_{\lambda_1}\int_{\lambda_2}p(\lambda_1)p(\lambda_2)p(\vec{y_1}|\lambda_1)p(\vec{y_2}|\lambda_2)d\lambda_2d\lambda_1\\
@@ -363,16 +363,16 @@ P(\vec{y_1},\vec{y_2}|H_1)&=\int_{\lambda_1}\int_{\lambda_2}p(\lambda_1)p(\lambd
 P(\vec{y_1},\vec{y_2}|H_1)&=\left( \frac{\beta_0^{\alpha_0}}{\Gamma(\alpha_0)}\right)^2\frac{\Gamma(\alpha_0+n_2)}{(\beta_0+s_2)^{(\alpha_0+n_2)}}\frac{\Gamma(\alpha_0+n_1)}{(\beta_0+s_1)^{(\alpha_0+n_1)}}
 \end{split}
 $$
-Ya teniendo esas cantidades, ahora se calcula el factor de Bayes para este sistema de hipótesis
+Ya teniendo esas cantidades, ahora se calcula el factor de Bayes10 para este sistema de hipótesis:
 $$
 B_{10}=\frac{\left( \frac{\beta_0^{\alpha_0}}{\Gamma(\alpha_0)} \right)\Gamma(\alpha_0+n_2)\Gamma(\alpha_0+n_1)(\beta_0+s_1+s_2)^{(\alpha_0+n_1+n_2)}}{\Gamma(\alpha_0+n_1+n_2)(\beta_0+s_2)^{(\alpha_0+n_2)}(\beta_0+s_1)^{(\alpha_0+n_1)}}
 $$
-Desarrollando esto a través de código en r y remplazando cada uno de los valores de la ecuación por los del caso. Se tiene que $B_{10}=1.18$, este resultado siguiendo a  Kass (1995). Aunque existe una mayor probabilidad para $H_1$, no es muy decisiva por sobre la de $H_0$. 
+Desarrollando esto, a través de código en r, y remplazando cada uno de los valores de la ecuación por los previamente obtenidos u observados, se tiene que $B_{10}=1.18$. este resultado indica que existe una mayor probabilidad para $H_1$. Aunque, siguiendo el criterio de  Kass (1995), no es muy decisiva por sobre la de $H_0$. 
 
-Aterrizando este resultado al contexto del problema, se dice que hay evidencia en los datos para decir que el tipo de alambre si afecta el tiempo de falla del mismo (los lambda son distintos), aunque la evidencia no sea muy decantada a este hecho.
+Aterrizando este resultado al contexto del problema, se dice que  los datos apoyan más lahipótesis en que los tipo de alambre tienen tiempos medios de falla distintos (los lambda son distintos), aunque la evidencia no sea muy fuerte a favor de este hecho.
 
 
-## Punto 10{-}
+## Punto 10 Bondad de ajuste para la media {-}
 Verifique la idoneidad del modelo para ambos tipos de alambre empleando como estadística de prueba la media del tiempo de falla. Presente sus resultados gráficamente comparando la distribución predictiva posterior con el valor observado correspondiente. Así mismo, reporte el valor $p$ predictivo posterior en cada caso.
 
 ### solución:{-}
